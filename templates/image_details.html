@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<h2>{{ display_image.title }}</h2>
+<img class="product-img" src="{{display_image.url}}">
+<div class="cart well">
+    <h3>{{display_image.author}}</h3>
+</div>
+<div class="melon-details">
+    <h3>Product details</h3>
+    <p>{{display_image.description}}<p>
+</div>
+
+
+{% endblock %}

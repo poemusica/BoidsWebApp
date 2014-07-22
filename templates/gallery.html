@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+<h2>Garden Variety...</h2>
+
+<div id="image-list">
+    {% for image in image_list %}
+    <div class="melon-summary well">
+        <h2><a href="/gallery/{{image.id}}">{{image.title}}</a></h2>
+        <a href="/gallery/{{image.id}}">
+        <img src="{{image.url}}">
+        </a>
+        <h3>{{image.author}}</h3>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

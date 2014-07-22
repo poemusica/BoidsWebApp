@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<script type="text/javascript" src="/static/libs/processing-1.4.8.min.js"></script>
+<script type="text/javascript" src="/static/js/sketch.js"></script>
+
+<style>
+	canvas {width:800; height:500; display: block;}
+	img { width: 450; display: block;}
+</style>
+
+<canvas id="mysketch" data-processing-sources="/static/processes/Sketch.pde /static/processes/Blob.pde /static/processes/Buttons.pde /static/processes/Flow.pde"></canvas>
+
+<button type="button" onclick="toggle('flock')">Flock</button>
+
+<button type="button" onclick="toggle('flow')">Flow</button>
+
+<button type="button" onclick="toggle('walls')">Walls</button>
+
+<button type="button" onclick="toggle('attract')">Attract</button>
+
+<button type="button" onclick="toggle('repel')">Repel</button>
+
+<button type="button" onclick="toggle('trails')">Trails</button>
+
+<button type="button" onclick="saveImage()">Take pic</button>
+
+<div id="blackout-screen">
+    <div id="promotion" class="jumbotron">
+        <h4>"Sweet pic!"</h4>
+        <img id="myimage" src=""/>
+        <p></p>
+        <a id="close-promotion">Cancel</a>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript"> </script>
+
+{% endblock %}
