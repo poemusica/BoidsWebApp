@@ -25,16 +25,15 @@ def index():
     return render_template("index.html")
 
 
-
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-@app.route("/", methods=['POST'])
+@app.route("/postdata", methods=['POST'])
 def testing():
 	print request.form
-	return render_template("index.html") # debug line.
+	return "foo" # debug line.
+
 # def save_image():
 # 	file = request.files['file']
 # 	if file and allowed_file(file.filename):

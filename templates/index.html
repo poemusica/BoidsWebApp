@@ -30,13 +30,12 @@
     <div id="promotion" class="jumbotron">
         <h4>"Sweet pic!"</h4>
 
-        <form action="/" method="post">
-			<img id="myimage" src=""/><br>
-			Discoverer:<input type="text" name="discoverer"><br>
-			Species name: <input type="text" name="title"><br>
-			Description: <textarea type="text" name="description"></textarea><br>
-			<input type="submit">
-		</form>
+		<img id="form-image" src=""/><br>
+		Discoverer:<input type="text" id="form-discoverer" name="discoverer"><br>
+		Species name: <input type="text" id="form-title" name="title"><br>
+		Description: <textarea type="text" id="form-description" name="description"></textarea><br>
+		<button type="button" onclick="postdata()">Submit</button>
+
         <p></p>
         <a id="close-promotion">Cancel</a>
 

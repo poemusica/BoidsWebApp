@@ -23,9 +23,9 @@ function toggle(s)
 // Take a screenshot of the canvas.
 function saveImage()
 {
-	var canvas = document.getElementById("mysketch");
+	var canvas = $("canvas#mysketch")[0];
 	var img = canvas.toDataURL("image/png");
-	var myimg = document.getElementById("myimage");
+	var myimg = $("#form-image")[0];
 	myimg.src=img;
 
 	var blackout = $('div#blackout-screen');
@@ -36,6 +36,28 @@ function hide_Blackout(){
     var blackout = $('div#blackout-screen');
     blackout.hide();
     return false;
+}
+
+function postdata(){
+	var discoverer = $("#form-discoverer").val();
+	var title = $("#form-title").val();
+	var description = $("#form-description").val();
+	var img = $("#form-image");
+	var formData = {discoverer:discoverer, title:title, description:description}; //Array 
+	$.ajax({
+    url : "/postdata",
+    type: "POST",
+    data : formData,
+    success: function(data, textStatus, jqXHR)
+    {
+        console.log("post success");
+        hide_Blackout();
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+		console.log("post fail");
+    }
+});
 }
 
 $(document).ready(function(){
