@@ -3,9 +3,7 @@ import hashlib
 
 from flask import Flask, request, session, render_template, g, redirect, url_for, flash, send_file
 from flask.ext.sqlalchemy import SQLAlchemy
-
-import os
-from werkzeug.utils import secure_filename
+from sqlalchemy import desc
 
 import model
 import jinja2
@@ -18,7 +16,7 @@ app.secret_key = 'SECRETSAUCE'
 app.jinja_env.undefined = jinja2.StrictUndefined
 app.config['UPLOAD_FOLDER'] = '/static/img'
 
-# TODO: Create a database (I don't need this stuff?...yet?)
+# I don't need this stuff?...yet?
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost:5432/boids'
 #db = SQLAlchemy(app)
 
@@ -39,10 +37,8 @@ def postdata():
 	formdata = {'user': user, 'title': title, 'description': description, 'filename': filename}
 	if commit_data(formdata):
 		image = model.session.query(model.Image).filter_by(filename=filename).first()
-		return redirect("/gallery/%s" % image.id)
-
-	# if filename:
-	# 	return ",".join([user, title, description, filename])
+		host = request.host
+		return render_template("_save_confirmation.html", image_id=image.id, hostname=host)
 	else:
 		return "sry, no data 4 u." # debug line.
 
@@ -117,11 +113,13 @@ def permalink(id):
 	image = model.session.query(model.Image).filter_by(id=id).first()
 	return render_template("image_details.html", display_image=image)
 
-# TODO: gallery page
+# gallery page
 @app.route("/gallery")
 def gallery():
-	image_list = model.session.query(model.Image).limit(20).all()
+	image_list = model.session.query(model.Image).order_by(model.Image.id.desc()).limit(50).all()
 	return render_template("gallery.html", images=image_list)
+
+
 
 if __name__ == "__main__":
 	app.run(debug=True)

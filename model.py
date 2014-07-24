@@ -13,7 +13,7 @@ session = scoped_session(sessionmaker(bind=ENGINE,
 Base = declarative_base()
 Base.query = session.query_property
 
-### Class declarations go here
+### Class declarations
 # users to images is one-to-many
 class User(Base):
     __tablename__ = "users"

@@ -1,3 +1,4 @@
 env
+captures
 *.pyc
 .DS_Store

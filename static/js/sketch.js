@@ -1,5 +1,5 @@
 
-// Bind javascript to processing instance
+// bind javascript to processing instance
 
 function bindJavascript()
 {
@@ -12,7 +12,7 @@ function bindJavascript()
 	else setTimeout(bindJavascript, 250);
 }
 
-// Access to processing (top-level functions only)
+// access to processing (top-level functions only)
 
 function toggle(s)
 {
@@ -20,7 +20,7 @@ function toggle(s)
 	pjs.handleClick(s);
 }
 
-// Take a screenshot of the canvas.
+// take a screenshot of the canvas
 function saveImage()
 {
 	var canvas = $("canvas#mysketch")[0];
@@ -32,12 +32,14 @@ function saveImage()
 	blackout.show();
 }
 
+// close blackout screen
 function hide_Blackout(){
 	var blackout = $('div#blackout-screen');
 	blackout.hide();
 	return false;
 }
 
+// post form data to server
 function postdata()
 {
 	var discoverer = $("#form-discoverer").val();
@@ -52,16 +54,18 @@ function postdata()
 		data : formData,
 		success: function(data, textStatus, jqXHR)
 		{
-			console.log("post success", data);
-			hide_Blackout();
+			console.log("post success", data); //debug line
+			$("a#close-promotion").text('Close');
+			$("div#promo-content").html(data);
 		},
 		error: function (jqXHR, textStatus, errorThrown)
 		{
-			console.log("post fail");
+			console.log("post fail"); // debug line
 		}
 	});
 }
 
+// setup bindings
 $(document).ready
 (
 	function()
