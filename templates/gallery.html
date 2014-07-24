@@ -5,13 +5,13 @@
 <h2>Garden Variety...</h2>
 
 <div id="image-list">
-    {% for image in image_list %}
+    {% for image in images %}
     <div class="melon-summary well">
-        <h2><a href="/gallery/{{image.id}}">{{image.title}}</a></h2>
+        <h2><a href="/gallery/{{image.id}}">{{image.imagemetadata.title}}</a></h2>
         <a href="/gallery/{{image.id}}">
-        <img src="{{image.url}}">
+        <img src="/captures/{{image.filename}}.png">
         </a>
-        <h3>{{image.author}}</h3>
+        <h3>{{image.imagemetadata.title}}</h3>
     </div>
     {% endfor %}
 </div>

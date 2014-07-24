@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<h2>{{ display_image.title }}</h2>
-<img class="product-img" src="{{display_image.url}}">
+<h2>{{ display_image.imagemetadata.title }}</h2>
+<h3>discovered by {{display_image.user.name}}</h3>
 <div class="cart well">
-    <h3>{{display_image.author}}</h3>
+	<img class="product-img" src="/captures/{{display_image.filename}}.png">
 </div>
 <div class="melon-details">
-    <h3>Product details</h3>
-    <p>{{display_image.description}}<p>
+	<h3>Description</h3>
+	<p>{{display_image.imagemetadata.description}}<p>
 </div>
 
 
