@@ -33,36 +33,42 @@ function saveImage()
 }
 
 function hide_Blackout(){
-    var blackout = $('div#blackout-screen');
-    blackout.hide();
-    return false;
+	var blackout = $('div#blackout-screen');
+	blackout.hide();
+	return false;
 }
 
-function postdata(){
+function postdata()
+{
 	var discoverer = $("#form-discoverer").val();
 	var title = $("#form-title").val();
 	var description = $("#form-description").val();
-	var img = $("#form-image");
-	var formData = {discoverer:discoverer, title:title, description:description}; //Array 
-	$.ajax({
-    url : "/postdata",
-    type: "POST",
-    data : formData,
-    success: function(data, textStatus, jqXHR)
-    {
-        console.log("post success");
-        hide_Blackout();
-    },
-    error: function (jqXHR, textStatus, errorThrown)
-    {
-		console.log("post fail");
-    }
-});
+	var img = $("#form-image")[0].src;
+	var formData = {discoverer:discoverer, title:title, description:description, image:img}; //Array 
+	$.ajax
+	({
+		url : "/postdata",
+		type: "POST",
+		data : formData,
+		success: function(data, textStatus, jqXHR)
+		{
+			console.log("post success", data);
+			hide_Blackout();
+		},
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			console.log("post fail");
+		}
+	});
 }
 
-$(document).ready(function(){
-	bindJavascript();
-	hide_Blackout();
-	var close_promo_link = $("a#close-promotion");
-	close_promo_link.click(hide_Blackout);
-});
+$(document).ready
+(
+	function()
+	{
+		bindJavascript();
+		hide_Blackout();
+		var close_promo_link = $("a#close-promotion");
+		close_promo_link.click(hide_Blackout);
+	}
+);

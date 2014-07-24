@@ -1,6 +1,10 @@
-import os
+import base64
+import hashlib
+
 from flask import Flask, request, session, render_template, g, redirect, url_for, flash
 from flask.ext.sqlalchemy import SQLAlchemy
+
+import os
 from werkzeug.utils import secure_filename
 
 import model
@@ -21,17 +25,27 @@ app.config['UPLOAD_FOLDER'] = '/static/img'
 
 @app.route("/", methods=['GET'])
 def index():
-    """This is the landing page.""" 
-    return render_template("index.html")
+	"""This is the landing page.""" 
+	return render_template("index.html")
 
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+	return '.' in filename and \
+		filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 @app.route("/postdata", methods=['POST'])
-def testing():
+def postdata():
 	print request.form
+	header, image_data = request.form['image'].split(",")
+	if image_data:
+		png = base64.decodestring(image_data)
+		hasher = hashlib.md5()
+		hasher.update(png)
+		filename = hasher.hexdigest() + ".png"
+		filepath = "captures/" + filename
+		f = open(filepath, "w")
+		f.write(png)
+		f.close()
 	return "foo" # debug line.
 
 # def save_image():
@@ -39,17 +53,8 @@ def testing():
 # 	if file and allowed_file(file.filename):
 # 		filename = secure_filename(file.filename)
 # 		file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-# 		return redirect(url_for('uploaded_file',
-#                                     filename=filename))
-# 	return '''
-# 	<!doctype html>
-# 	<title>Upload new File</title>
-# 	<h1>Upload new File</h1>
-# 	<form action="" method=post enctype=multipart/form-data>
-# 	  <p><input type=file name=file>
-# 	     <input type=submit value=Upload>
-# 	</form>
-# 	'''
+# 		return redirect(url_for('uploaded_file', filename=filename))
+# 	return "file not found or not allowed."
 
 
 # TODO: permalinks
@@ -59,4 +64,4 @@ def testing():
 #@app.route("/gallery")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+	app.run(debug=True)
