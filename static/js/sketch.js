@@ -14,8 +14,18 @@ function bindJavascript()
 
 // access to processing (top-level functions only)
 
+function toggleBorder()
+{
+	if ($("canvas#mysketch").css("border-width") == "0px")
+	{ $("canvas#mysketch").css("border-width","5px"); }
+	else { $("canvas#mysketch").css("border-width","0px"); }
+}
+
 function toggle(s)
 {
+	if (s == 'walls')
+	{ toggleBorder(); }
+
 	var pjs = Processing.getInstanceById("mysketch");
 	pjs.handleClick(s);
 }
