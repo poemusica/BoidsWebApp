@@ -8,12 +8,22 @@ void mouseClicked( MouseEvent e )
   }
 }
 
+void mouseMoved()
+{
+  cursor.mX = mouseX;
+  cursor.mY = mouseY;
+}
 
 class Cursor
 {
   int r = 80;
+  float mX;
+  float mY;
   
   Cursor(){}
+  
+  void reset()
+  { mX = -r * 3; mY = -r * 3; }
   
   void draw()
   {
@@ -21,16 +31,18 @@ class Cursor
     {
       fill( color( 255, 255, 255, 80 ) );
       noStroke();
-      ellipse( mouseX, mouseY, r, r );
+      ellipse( mX, mY, r, r );
     }
-    
-    if ( controls.buttons[(int)controls.buttonsIndex.get("repel")].state )
+    else if ( controls.buttons[(int)controls.buttonsIndex.get("repel")].state )
     {
       fill( color( 0, 0, 0, 80 ) );
       noStroke();
-      ellipse( mouseX, mouseY, r, r );
+      ellipse( mX, mY, r, r );
     }
+    else
+    { reset(); } 
   }
+  
 }
 
 
@@ -139,13 +151,13 @@ void handleClick(String s)
   if (s == "attract")
   {
     b = controls.buttons[(int)controls.buttonsIndex.get("repel")];
-    if ( b.state ) { b.state = false; b.swapColor(); }
+    if ( b.state ) { b.state = false; b.swapColor(); cursor.reset(); }
   }
   
   else if (s == "repel")
   {
     b = controls.buttons[(int)controls.buttonsIndex.get("attract")];
-    if ( b.state ) { b.state = false; b.swapColor(); }
+    if ( b.state ) { b.state = false; b.swapColor(); cursor.reset(); }
   }
   
   controls.stale = true;
