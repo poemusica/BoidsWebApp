@@ -1,4 +1,38 @@
-// Globals
+void mouseClicked( MouseEvent e )
+{
+  if ( javascript != null ) { return; }
+  for (Button b : controls.buttons)
+  {
+    if ( b.contains(e.getX(), e.getY()) )
+    { handleClick(b.label); } 
+  }
+}
+
+
+class Cursor
+{
+  int r = 80;
+  
+  Cursor(){}
+  
+  void draw()
+  {
+    if ( controls.buttons[(int)controls.buttonsIndex.get("attract")].state )
+    {
+      fill( color( 255, 255, 255, 80 ) );
+      noStroke();
+      ellipse( mouseX, mouseY, r, r );
+    }
+    
+    if ( controls.buttons[(int)controls.buttonsIndex.get("repel")].state )
+    {
+      fill( color( 0, 0, 0, 80 ) );
+      noStroke();
+      ellipse( mouseX, mouseY, r, r );
+    }
+  }
+}
+
 
 class ControlPanel
 {
@@ -13,7 +47,7 @@ class ControlPanel
     buttonsIndex = new HashMap<String,Integer>();
     buttons[0] = new Button( new PVector( 10 , height - 60 ), 50, 35, "flock", true );
     buttonsIndex.put( "flock", 0 );
-    buttons[1] = new Button( new PVector( 70, height - 60 ), 50, 35, "flow", true );
+    buttons[1] = new Button( new PVector( 70, height - 60 ), 50, 35, "flow", false );
     buttonsIndex.put( "flow", 1 );
     buttons[2] = new Button( new PVector( 130, height - 60 ), 50, 35, "walls", false );
     buttonsIndex.put( "walls", 2 );
@@ -32,7 +66,7 @@ class ControlPanel
  void fillBuffer()
  {
    pg.beginDraw();
-   pg.clear();  // WARNING: BREAKS Processing.js!
+   pg.background( 0, 0, 0, 0 );
    for ( Button b : buttons )
    {
      b.draw( pg );
@@ -68,8 +102,8 @@ class Button
     pos = p;
     label = l;
     state = s;
-    cstroke = randomColor();
-    cfill = randomColor();
+    cstroke = theme.randomColor( 0, 255 );
+    cfill = theme.randomColor( 0, 255 );
   }
   
   boolean contains( int x, int y )

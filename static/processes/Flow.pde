@@ -1,4 +1,3 @@
-// Defines vector flow field class.
 class FlowField
 {
   int cellSize;
@@ -22,10 +21,10 @@ class FlowField
     workingBuffer = createGraphics(width, height);
     visibleBuffer = createGraphics(width, height);
     visibleBuffer.beginDraw();
-    visibleBuffer.background(0xFF33FFCC);
+    visibleBuffer.background( 0, 0, 0, 0 );
     visibleBuffer.endDraw();
     workingBuffer.beginDraw();
-    workingBuffer.background(0xFF33FFCC);
+    workingBuffer.background( 0, 0, 0, 0 );
     workingBuffer.endDraw();
     reCompute();
   }
@@ -98,7 +97,7 @@ class FlowField
       visibleBuffer = workingBuffer;
       workingBuffer = temp;
       workingBuffer.beginDraw();
-      workingBuffer.background( 0xFF33FFCC );
+      workingBuffer.background( 0, 0, 0, 0 );
       workingBuffer.endDraw();
       bookmark = 0;
     }

@@ -10,7 +10,18 @@
 	img { width: 450; display: block;}
 </style>
 
-<canvas id="mysketch" data-processing-sources="/static/processes/Sketch.pde /static/processes/Blob.pde /static/processes/Buttons.pde /static/processes/Flow.pde"></canvas>
+<canvas id="mysketch" data-processing-sources="
+	/static/processes/processes.pde
+	/static/processes/main.pde 
+	/static/processes/Behavior.pde 
+	/static/processes/Controls.pde 
+	/static/processes/Creature.pde
+	/static/processes/Flock.pde
+	/static/processes/Flow.pde
+	/static/processes/Texture.pde
+	/static/processes/Theme.pde
+	">
+</canvas>
 
 <button type="button" onclick="toggle('flock')">Flock</button>
 
