@@ -11,7 +11,10 @@
         <a href="/gallery/{{image.id}}">
         <img src="/captures/{{image.filename}}.png">
         </a>
-        <h3>{{image.user.name}}</h3>
+        <div>
+        	<p>discovered by</p>
+        	<h3>{{image.user.name}}</h3>
+    	</div>
     </div>
     {% endfor %}
 </div>
