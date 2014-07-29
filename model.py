@@ -1,11 +1,10 @@
-#from app import db
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Text
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-# TODO: Create a database
+
 ENGINE = create_engine('postgresql:///boid', echo=False)
 session = scoped_session(sessionmaker(bind=ENGINE,
                                        autocommit=False,
@@ -13,7 +12,8 @@ session = scoped_session(sessionmaker(bind=ENGINE,
 Base = declarative_base()
 Base.query = session.query_property
 
-### Class declarations
+### Classes: Table Definitions ###
+
 # users to images is one-to-many
 class User(Base):
     __tablename__ = "users"
@@ -41,7 +41,7 @@ class Image(Base):
         uselist = False,
         backref="images")
 
-### End class declarations
+### End Classes ###
 
 def main():
     global Base

@@ -1,9 +1,7 @@
 import base64
 import hashlib
 
-from flask import Flask, request, session, render_template, g, redirect, url_for, flash, send_file
-from flask.ext.sqlalchemy import SQLAlchemy
-from sqlalchemy import desc
+from flask import Flask, request, render_template, send_file
 
 import model
 import jinja2
@@ -15,11 +13,7 @@ app = Flask(__name__)
 app.secret_key = 'SECRETSAUCE'
 app.jinja_env.undefined = jinja2.StrictUndefined
 app.config['UPLOAD_FOLDER'] = '/static/img'
-#app.config['SERVER_NAME'] = 'localhost:8000'
 
-# I don't need this stuff?...yet?
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost:5432/boids'
-#db = SQLAlchemy(app)
 
 # landing page
 @app.route("/", methods=['GET'])
@@ -57,9 +51,7 @@ def commit_data(data):
 		description = 'little is known about these specimens'
 
 	u_exists = model.session.query(model.User).filter_by(name=user).first()
-	print u_exists
 	if not u_exists:
-		print "user does not exist."
 		u_exists = model.User(name=user)
 		model.session.add(u_exists)
 		model.session.commit()
@@ -104,7 +96,6 @@ def save_image(raw_data):
 @app.route("/captures/<filename>")
 def serve_image(filename):
 	f = open('captures/%s'%filename)
-	print dir(f)
 	return send_file(f, mimetype="image/png")
 
 # gallery item permalinks
@@ -122,4 +113,4 @@ def gallery():
 
 
 if __name__ == "__main__":
-	app.run(debug=True, host='0.0.0.0', port=80)
+	app.run(debug=True, host='0.0.0.0', port=80) #changed to port 80 for AWS web server
