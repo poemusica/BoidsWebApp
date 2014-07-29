@@ -34,7 +34,7 @@ function toggle(s)
 function saveImage()
 {
 	var canvas = $("canvas#mysketch")[0];
-	var img = canvas.toDataURL("image/png");
+	var img = canvas.toDataURL("image/jpg");
 	var myimg = $("#form-image")[0];
 	myimg.src=img;
 

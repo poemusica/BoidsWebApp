@@ -7,7 +7,7 @@ import model
 import jinja2
 
 
-ALLOWED_EXTENSIONS = set(['png'])
+ALLOWED_EXTENSIONS = set(['jpg'])
 
 app = Flask(__name__)
 app.secret_key = 'SECRETSAUCE'
@@ -76,17 +76,17 @@ def commit_data(data):
 
 	return True
 
-# save png locally to web server
+# save jpg locally to web server
 def save_image(raw_data):
 	header, image_data = raw_data.split(",")
 	if image_data:
-		png = base64.decodestring(image_data)
+		jpg = base64.decodestring(image_data)
 		hasher = hashlib.md5()
-		hasher.update(png)
+		hasher.update(jpg)
 		filename = hasher.hexdigest()
-		filepath = "captures/" + filename + ".png"
-		f = open(filepath, "w")
-		f.write(png)
+		filepath = "captures/" + filename + ".jpg"
+		f = open(filepath, "wb")
+		f.write(jpg)
 		f.close()
 		return filename
 	else:
@@ -95,8 +95,8 @@ def save_image(raw_data):
 # workaround for serving files from somewhere other than static
 @app.route("/captures/<filename>")
 def serve_image(filename):
-	f = open('captures/%s'%filename)
-	return send_file(f, mimetype="image/png")
+	f = open('captures/%s'%filename, 'rb')
+	return send_file(f, mimetype="image/jpeg")
 
 # gallery item permalinks
 @app.route("/gallery/<id>")
