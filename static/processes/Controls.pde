@@ -31,16 +31,19 @@ class Cursor
     {
       fill( color( 255, 255, 255, 80 ) );
       noStroke();
-      ellipse( mX, mY, r, r );
     }
     else if ( controls.buttons[(int)controls.buttonsIndex.get("repel")].state )
     {
       fill( color( 0, 0, 0, 80 ) );
       noStroke();
-      ellipse( mX, mY, r, r );
     }
     else
-    { reset(); } 
+    { reset(); }
+    
+    if ( mouseX < 2 || mouseY < 2 || mouseX > width - 2 || mouseY > height -2  )
+    { reset(); }
+    
+    ellipse( mX, mY, r, r ); 
   }
   
 }
