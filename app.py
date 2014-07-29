@@ -15,6 +15,7 @@ app = Flask(__name__)
 app.secret_key = 'SECRETSAUCE'
 app.jinja_env.undefined = jinja2.StrictUndefined
 app.config['UPLOAD_FOLDER'] = '/static/img'
+#app.config['SERVER_NAME'] = 'localhost:8000'
 
 # I don't need this stuff?...yet?
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost:5432/boids'
@@ -29,7 +30,6 @@ def index():
 # post data from form
 @app.route("/postdata", methods=['POST'])
 def postdata():
-	print request.form # debug line.
 	user = request.form['discoverer']
 	title = request.form['title']
 	description = request.form['description']
@@ -122,4 +122,4 @@ def gallery():
 
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(debug=True, host='0.0.0.0', port=80)

@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 # TODO: Create a database
-ENGINE = create_engine('postgresql://localhost:5432/boid', echo=False)
+ENGINE = create_engine('postgresql:///boid', echo=False)
 session = scoped_session(sessionmaker(bind=ENGINE,
                                        autocommit=False,
                                        autoflush=False))
