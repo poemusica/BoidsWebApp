@@ -1,3 +1,4 @@
+import config
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, ForeignKey, Text
@@ -5,7 +6,7 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 
-ENGINE = create_engine('postgresql:///boid', echo=False)
+ENGINE = create_engine(config.win8path, echo=False)
 session = scoped_session(sessionmaker(bind=ENGINE,
                                        autocommit=False,
                                        autoflush=False))
