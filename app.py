@@ -109,7 +109,7 @@ def permalink(id):
 # gallery page
 @app.route("/gallery")
 def gallery():
-	image_list = model.session.query(model.Image).order_by(model.Image.id.desc()).limit(60).all()
+	image_list = model.session.query(model.Image).order_by(model.Image.id.desc()).limit(30).all()
 	return render_template("gallery.html", images=image_list)
 
 
