@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
 
+<script type="text/javascript" src="/static/js/gallery.js"></script>
+
 <div id="outer-div">
 
     <div id="canvas-gallery-div">
@@ -8,7 +10,7 @@
         /static/processes/gallery/gallery.pde"></canvas>
     </div>
 
-	<div class="container image-detail">
+	<div id="image-container" class="container image-detail">
 		<div class="thumbnail image-detail">
 			<h3 id="form-intro">{{ display_image.imagemetadata.title }}</h3>
 			</p>discovered by {{display_image.user.name}}</p>
@@ -25,7 +27,7 @@
 					<p>{{display_image.imagemetadata.description}}</p>
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 

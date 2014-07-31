@@ -12,8 +12,13 @@ canvas#main-sketch {
   height: 500;
   display: block;
   border: 0px solid black;
+  margin: 20px auto;
 }
 
+div#form-modal {
+  width: 70%;
+  margin: auto;
+}
 
 h3#form-intro {
   width: 100%;
@@ -47,10 +52,14 @@ div#canvas-gallery-div {
 div.thumbnail.gallery {
   background-color: rgba(255, 255, 255, 0.7);
 }
+
+div#image-container {
+}
+
 div.thumbnail.image-detail {
-  margin: 20px auto;
-  max-height: 50%;
+  margin: 5% auto;
   background-color: rgba(255, 255, 255, 0.7);
+  width: 70%;
 }
 
 img#image-detail {

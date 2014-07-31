@@ -3,23 +3,6 @@
 {% block body %}
 <script type="text/javascript" src="/static/js/vivarium.js"></script>
 
-
-<canvas id="main-sketch" data-processing-sources="
-	/static/processes/vivarium/vivarium.pde
-	/static/processes/vivarium/main.pde 
-	/static/processes/vivarium/Behavior.pde 
-	/static/processes/vivarium/Controls.pde 
-	/static/processes/vivarium/Creature.pde
-	/static/processes/vivarium/Flock.pde
-	/static/processes/vivarium/Flow.pde
-	/static/processes/vivarium/Texture.pde
-	/static/processes/vivarium/Theme.pde
-	">
-</canvas>
-
-
-<!-- <canvas id="main-sketch"></canvas> -->
-
 <div class="btn-group btn-group-justified button-container">
 
 	<a type="button" class="btn btn-lg btn-default custom" onclick="toggle('flock')">Flock</a>
@@ -37,10 +20,24 @@
 	<a type="button" class="btn btn-lg btn-default custom" id="save-image-btn">Take pic</a>
 </div>
 
+<canvas id="main-sketch" data-processing-sources="
+	/static/processes/vivarium/vivarium.pde
+	/static/processes/vivarium/main.pde 
+	/static/processes/vivarium/Behavior.pde 
+	/static/processes/vivarium/Controls.pde 
+	/static/processes/vivarium/Creature.pde
+	/static/processes/vivarium/Flock.pde
+	/static/processes/vivarium/Flow.pde
+	/static/processes/vivarium/Texture.pde
+	/static/processes/vivarium/Theme.pde
+	">
+</canvas>
+
+
 <!-- start hidden form -->
 <div class="modal fade bs-example-modal-lg hidden-form" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div id="form-modal" class="modal-content">
 
     	<div id="form-content"> <!-- start dynamic content -->
 
