@@ -3,7 +3,14 @@
 
 <script type="text/javascript" src="/static/js/gallery.js"></script> 
 
-<div class="container"> <!-- outer container -->
+<div id="outer-div">
+
+<div id="canvas-gallery-div">
+    <canvas id="gallery-sketch" data-processing-sources="
+    /static/processes/gallery/gallery.pde"></canvas>
+</div>
+
+<div class="container"> <!-- outer gallery container -->
     <div class="row clearfix">
         <div class="col-md-12 column">
 
@@ -40,7 +47,9 @@
 
         </div>
     </div>
-</div> <!-- end outer container -->
+</div> <!-- end outer gallery container -->
+
+</div> <!-- end outer div -->
 
 
 {% endblock %}

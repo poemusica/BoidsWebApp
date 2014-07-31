@@ -33,6 +33,18 @@ div.form-field-container {
   width: 100%;
 }
 
+canvas#gallery-sketch {
+  position: fixed;
+}
+
+div#canvas-gallery-div {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: -1;
+}
+
+
 
 div.thumbnail.image-detail {
   margin: 20px auto;
