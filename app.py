@@ -6,13 +6,9 @@ from flask import Flask, request, render_template, send_file
 import model
 import jinja2
 
-
-ALLOWED_EXTENSIONS = set(['jpg'])
-
 app = Flask(__name__)
-app.secret_key = 'SECRETSAUCE'
 app.jinja_env.undefined = jinja2.StrictUndefined
-app.config['UPLOAD_FOLDER'] = '/static/img'
+
 
 
 # landing page
@@ -20,6 +16,12 @@ app.config['UPLOAD_FOLDER'] = '/static/img'
 def index():
 	"""This is the landing page.""" 
 	return render_template("index.html")
+
+# post data from form
+@app.route("/getform", methods=['GET'])
+def getform():
+	return render_template("_form_content.html")
+
 
 # post data from form
 @app.route("/postdata", methods=['POST'])
@@ -107,9 +109,8 @@ def permalink(id):
 # gallery page
 @app.route("/gallery")
 def gallery():
-	image_list = model.session.query(model.Image).order_by(model.Image.id.desc()).limit(50).all()
+	image_list = model.session.query(model.Image).order_by(model.Image.id.desc()).limit(60).all()
 	return render_template("gallery.html", images=image_list)
-
 
 
 if __name__ == "__main__":
