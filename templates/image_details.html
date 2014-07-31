@@ -1,15 +1,29 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<h2>{{ display_image.imagemetadata.title }}</h2>
-<h3>discovered by {{display_image.user.name}}</h3>
-<div class="cart well">
-	<img class="product-img" src="/captures/{{display_image.filename}}.jpg">
+<div class="container image-detail">
+
+		<div class="thumbnail image-detail">
+			<h3 id="form-intro">{{ display_image.imagemetadata.title }}</h3>
+			</p>discovered by {{display_image.user.name}}</p>
+			<div class="row clearfix">
+				<div class=" col-md-12 column image-container">
+					<img id="image-detail" src="/captures/{{display_image.filename}}.jpg"> <!-- image goes here -->
+				</div>
+			</div>
+
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<h3>field notes</h3>
+					<p>{{display_image.imagemetadata.description}}</p>
+				</div>
+			</div>
+	</div>
+
+
 </div>
-<div class="melon-details">
-	<h3>Description</h3>
-	<p>{{display_image.imagemetadata.description}}<p>
-</div>
+
+
 
 
 {% endblock %}

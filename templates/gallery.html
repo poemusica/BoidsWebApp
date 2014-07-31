@@ -1,21 +1,46 @@
 {% extends 'base.html' %}
 {% block body %}
 
+<script type="text/javascript" src="/static/js/gallery.js"></script> 
 
-<h2>Garden Variety...</h2>
+<div class="container"> <!-- outer container -->
+    <div class="row clearfix">
+        <div class="col-md-12 column">
 
-<div id="image-list">
-    {% for image in images %}
-    <div class="melon-summary well">
-        <h2><a href="/gallery/{{image.id}}">{{image.imagemetadata.title}}</a></h2>
-        <a href="/gallery/{{image.id}}">
-        <img src="/captures/{{image.filename}}.jpg">
-        </a>
-        <div>
-        	<p>discovered by</p>
-        	<h3>{{image.user.name}}</h3>
-    	</div>
+        <h2 id="gallery-header">Garden Variety...</h2> <!-- page header -->
+
+            {% for image in images %}
+
+            {%  if loop.index == 1 %}
+            <div class="row"> <!-- 3-column responsive grid for image thumbnails -->
+            {% endif %}
+
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <a href="/gallery/{{image.id}}">
+                            <img src="/captures/{{image.filename}}.jpg">
+                        </a>
+                        <div class="caption">
+                            <h3>
+                                <a href="/gallery/{{image.id}}">{{image.imagemetadata.title}}</a>
+                            </h3>
+                            <h4>discovered by {{image.user.name}}</h4>
+                        </div>
+                    </div>
+                </div>
+
+            {% if loop.index is divisibleby 3 %}
+            </div> <!-- close the row. note: if grid is not divisible by 3, the grid will be unfinished. -->
+            <div class="row">
+            {% endif %}
+
+            {% endfor %}
+
+
+
+        </div>
     </div>
-    {% endfor %}
-</div>
+</div> <!-- end outer container -->
+
+
 {% endblock %}

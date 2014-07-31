@@ -1,60 +1,63 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<script type="text/javascript" src="/static/js/vivarium.js"></script>
 
-<script type="text/javascript" src="/static/libs/processing-1.4.8.min.js"></script>
-<script type="text/javascript" src="/static/js/sketch.js"></script>
 
-<style>
-	canvas {width:800; height:500; display: block; border: 0px solid black;}
-	img { width: 450; display: block;}
-</style>
-
-<canvas id="mysketch" data-processing-sources="
-	/static/processes/processes.pde
-	/static/processes/main.pde 
-	/static/processes/Behavior.pde 
-	/static/processes/Controls.pde 
-	/static/processes/Creature.pde
-	/static/processes/Flock.pde
-	/static/processes/Flow.pde
-	/static/processes/Texture.pde
-	/static/processes/Theme.pde
+<canvas id="main-sketch" data-processing-sources="
+	/static/processes/vivarium/vivarium.pde
+	/static/processes/vivarium/main.pde 
+	/static/processes/vivarium/Behavior.pde 
+	/static/processes/vivarium/Controls.pde 
+	/static/processes/vivarium/Creature.pde
+	/static/processes/vivarium/Flock.pde
+	/static/processes/vivarium/Flow.pde
+	/static/processes/vivarium/Texture.pde
+	/static/processes/vivarium/Theme.pde
 	">
 </canvas>
 
-<button type="button" onclick="toggle('flock')">Flock</button>
 
-<button type="button" onclick="toggle('flow')">Flow</button>
+<!-- <canvas id="main-sketch"></canvas> -->
 
-<button type="button" onclick="toggle('walls')">Walls</button>
+<div class="btn-group btn-group-justified button-container">
 
-<button type="button" onclick="toggle('attract')">Attract</button>
+	<a type="button" class="btn btn-lg btn-default custom" onclick="toggle('flock')">Flock</a>
 
-<button type="button" onclick="toggle('repel')">Repel</button>
+	<a type="button" class="btn btn-lg btn-default custom" onclick="toggle('flow')">Flow</a>
 
-<button type="button" onclick="toggle('trails')">Trails</button>
+	<a type="button" class="btn btn-lg btn-default custom" onclick="toggle('walls')">Walls</a>
 
-<button type="button" onclick="saveImage()">Take pic</button>
+	<a type="button" class="btn btn-lg btn-default custom" onclick="toggle('attract')">Attract</a>
 
-<div id="blackout-screen">
-	<div id="promotion" class="jumbotron">
+	<a type="button" class="btn btn-lg btn-default custom" onclick="toggle('repel')">Repel</a>
 
-		<div id="promo-content" >
-			<h4>Snap! What have we here...</h4>
+	<a type="button" class="btn btn-lg btn-default custom" onclick="toggle('trails')">Trails</a>
 
-			<img id="form-image" src=""/><br>
-			Discoverer:<input type="text" id="form-discoverer" name="discoverer"><br>
-			Species name: <input type="text" id="form-title" name="title"><br>
-			Description: <textarea type="text" id="form-description" name="description"></textarea><br>
-			<button type="button" onclick="postdata()">Submit</button>
-		</div>
-		<a id="close-promotion" href="">Cancel</a>
-	</div>
-
+	<a type="button" class="btn btn-lg btn-default custom" id="save-image-btn">Take pic</a>
 </div>
 
+<!-- start hidden form -->
+<div class="modal fade bs-example-modal-lg hidden-form" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
 
-<script type="text/javascript"> </script>
+    	<div id="form-content"> <!-- start dynamic content -->
+
+		</div> <!-- end dynamic content -->
+
+		<div class="container form-field-container"> <!-- start form buttons -->
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<a id="post-data-btn" class="btn btn-primary" role="button">Submit</a>
+					<a id="close-form" class="btn btn-default" role="button">Cancel</a>
+				</div>
+			</div>
+		</div> <!-- end form buttons -->
+
+    </div>
+  </div> 
+</div> <!-- end hidden form -->
+
 
 {% endblock %}

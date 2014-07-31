@@ -1,113 +1,45 @@
-div#blackout-screen {
-  position: fixed;
-  top: 0;
-  left:0;
-  background-color: rgba(0, 0, 0, 0.5);
+body {
+  min-height: 400px;
+  min-width: 400px;
+}
+
+.navbar-static-top {
+  margin-bottom: 0em;
+}
+
+canvas#main-sketch {
+  width: 800; 
+  height: 500;
+  display: block;
+  border: 0px solid black;
+}
+
+
+h3#form-intro {
   width: 100%;
-  height: 100%;
 }
 
-div#promotion {
-  position: fixed;
-  width: 600px;
-  top: 50px;
-  border: 3px solid gray;
-  left: 50%;
-  margin-left: -300px; 
+div.image-container {
+  width: 100%;
 }
 
-div#promotion>h3 {
-  color: blue;
+img#form-image {
+  width: 100%;
+  border: 0.2em solid gray;
 }
 
-div#cart{
-  width: 200px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 10px;
-  position: absolute;
-  top: 50px;
-  right: 75px;
-  background-color: #f3f3f3;
-  display: none;
+div.form-field-container {
+  margin: 20px auto;
+  width: 100%;
 }
 
 
-
-div.melon-summary img {
-    width: 200px;
+div.thumbnail.image-detail {
+  margin: 20px auto;
+  max-height: 50%;
 }
 
-div.navbar-header img {
-    width: 30px;
-    float: left;
-    margin-top: 7px;
-    margin-right: 7px;
+img#image-detail {
+  width: 100%;
+  border: 0.2em solid gray;
 }
-
-div.melon-summary {
-    display: inline-block;
-
-    width: 300px;
-    vertical-align: top;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    padding-left: 10px;
-    padding-bottom: 20px;
-}
-
-li.warning {
-    color: red;
-}
-
-img.product-img {
-    display: inline-block;
-    max-width: 400px;
-}
-
-div.cart {
-    display: inline-block;
-    vertical-align: top;
-    margin-left: 30px;
-}
-
-
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-img.melon-cart {
-    height: 15px;
-}
-
