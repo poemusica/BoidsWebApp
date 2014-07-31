@@ -4,3 +4,4 @@ easy_install
 pg_hba.conf
 *.pyc
 .DS_Store
+model.py
