@@ -46,5 +46,3 @@ void draw()
   
   //println( frameRate ); // benchmark
 }
-
-
