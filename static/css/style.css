@@ -44,11 +44,13 @@ div#canvas-gallery-div {
   z-index: -1;
 }
 
-
-
+div.thumbnail.gallery {
+  background-color: rgba(255, 255, 255, 0.7);
+}
 div.thumbnail.image-detail {
   margin: 20px auto;
   max-height: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 img#image-detail {

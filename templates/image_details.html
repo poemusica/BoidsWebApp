@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<div class="container image-detail">
+<div id="outer-div">
 
+    <div id="canvas-gallery-div">
+        <canvas id="gallery-sketch" data-processing-sources="
+        /static/processes/gallery/gallery.pde"></canvas>
+    </div>
+
+	<div class="container image-detail">
 		<div class="thumbnail image-detail">
 			<h3 id="form-intro">{{ display_image.imagemetadata.title }}</h3>
 			</p>discovered by {{display_image.user.name}}</p>
+
 			<div class="row clearfix">
 				<div class=" col-md-12 column image-container">
 					<img id="image-detail" src="/captures/{{display_image.filename}}.jpg"> <!-- image goes here -->
@@ -18,12 +25,11 @@
 					<p>{{display_image.imagemetadata.description}}</p>
 				</div>
 			</div>
+			
+		</div>
 	</div>
 
 
-</div>
-
-
-
+</div> <!-- end outer div -->
 
 {% endblock %}
