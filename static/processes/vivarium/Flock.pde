@@ -87,7 +87,6 @@ class Flock
     pg1.beginDraw();
     pg1.background( 0, 0, 0, 0 );
     pg1.image( pg2, 0, 0 );
-    pg1.tint( 255, 255 );
     for ( Creature k : creatures )
     {
       k.update();
