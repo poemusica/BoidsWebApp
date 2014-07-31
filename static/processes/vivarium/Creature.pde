@@ -54,7 +54,7 @@ class Creature
     // flow following 
     if ( controls.buttons[(int)controls.buttonsIndex.get("flow")].state )
     {
-     applyForce( myFlock.behavior.wander( this ) );
+     applyForce( myFlock.behavior.followFlow( this ) );
     }
     
     // attraction
