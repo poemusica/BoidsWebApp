@@ -66,7 +66,6 @@ function hide_form(){
 // post form data to server
 function postdata()
 {	
-	console.log('trying to post data');
 	var discoverer = $("#form-discoverer").val();
 	var title = $("#form-title").val();
 	var description = $("#form-description").val();

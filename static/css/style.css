@@ -1,6 +1,7 @@
 body {
   min-height: 400px;
   min-width: 400px;
+  background-color: #FAFAFA;
 }
 
 .navbar-static-top {
@@ -11,12 +12,12 @@ canvas#main-sketch {
   width: 800; 
   height: 500;
   display: block;
-  border: 0px solid black;
-  margin: 20px auto;
+  border: 0px solid #C3C3C3;
+  margin: 2% auto;
 }
 
 div#form-modal {
-  width: 70%;
+  width: 60%;
   margin: auto;
 }
 
@@ -54,15 +55,23 @@ div.thumbnail.gallery {
 }
 
 div#image-container {
+  width: 95%;
 }
 
 div.thumbnail.image-detail {
-  margin: 5% auto;
+  margin: 1% auto;
   background-color: rgba(255, 255, 255, 0.7);
-  width: 70%;
 }
 
 img#image-detail {
   width: 100%;
   border: 0.2em solid gray;
 }
+
+div.thumbnail.image-detail pre {
+font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+font-size: 14px;
+background: none;
+border: none;
+}
+
