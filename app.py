@@ -1,26 +1,40 @@
 import base64
 import hashlib
 
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, render_template, send_file, session, g
 
 import model
 import jinja2
 
 app = Flask(__name__)
-app.jinja_env.undefined = jinja2.StrictUndefined
+app.config.update(
+    DEBUG=True,
+    SECRET_KEY='\xf5!\x07!qj\xa4\x08\xc6\xf8\n\x8a\x95m\xe2\x04g\xbb\x98|U\xa2f\x03', # for session
+    SESSION_COOKIE_HTTPONLY = False
+)
 
+app.jinja_env.undefined = jinja2.StrictUndefined
 
 
 # landing page
 @app.route("/", methods=['GET'])
 def index():
-	"""This is the landing page.""" 
+	"""This is the landing page."""
+	session.clear()
+	session['img_data'] = {'title_id': None, 'title': None, 'user': None}
 	return render_template("index.html")
 
 # post data from form
 @app.route("/getform", methods=['GET'])
 def getform():
-	return render_template("_form_content.html")
+	template_vales = { 'user': None, 'title': None }
+	if session['img_data'].get('title_id'):
+		image = model.session.query(model.Image).filter_by(id=session['img_data']['title_id']).first()
+		if image.user.name != 'anonymous':
+			template_vales['user'] = image.user.name
+		if image.imagemetadata.title != '':
+			template_vales['title'] = image.imagemetadata.title
+	return render_template("_form_content.html", **template_vales)
 
 
 # post data from form
@@ -34,6 +48,9 @@ def postdata():
 	if commit_data(formdata):
 		image = model.session.query(model.Image).filter_by(filename=filename).first()
 		host = request.host
+		session['img_data']["title_id"] = image.id
+		session['img_data']["title"] = image.imagemetadata.title
+		session['img_data']["user"] = image.user.name
 		return render_template("_save_confirmation.html", image_id=image.id, hostname=host)
 	else:
 		return "sry, no data 4 u." # debug line.
@@ -48,9 +65,9 @@ def commit_data(data):
 	if not user:
 		user = 'anonymous'
 	if not title:
-		title = 'unnamed'
+		title = ''
 	if not description:
-		description = 'little is known about these specimens'
+		description = ''
 
 	u_exists = model.session.query(model.User).filter_by(name=user).first()
 	if not u_exists:
@@ -104,12 +121,21 @@ def serve_image(filename):
 @app.route("/gallery/<id>")
 def permalink(id):
 	image = model.session.query(model.Image).filter_by(id=id).first()
+	if image.imagemetadata.title == '':
+		image.imagemetadata.title = 'unnamed'
+	if image.imagemetadata.description == '':
+		image.imagemetadata.description = 'little is known about these specimens'
 	return render_template("image_details.html", display_image=image)
 
 # gallery page
 @app.route("/gallery")
 def gallery():
 	image_list = model.session.query(model.Image).order_by(model.Image.id.desc()).limit(30).all()
+	for image in image_list:
+		if image.imagemetadata.title == '':
+			image.imagemetadata.title = 'unnamed'
+		if image.imagemetadata.description == '':
+			image.imagemetadata.description = 'little is known about these specimens'
 	return render_template("gallery.html", images=image_list)
 
 

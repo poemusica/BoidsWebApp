@@ -16,14 +16,23 @@
 <div class="container form-field-container"> <!-- start form fields -->
 	<div class="row clearfix">
 		<div class="col-md-12 column">
+
 	      	<div class="input-group">
-					<span class="input-group-addon">Discoverer</span>
-					<input type="text" id="form-discoverer" class="form-control" placeholder="Yes, you!" name="discoverer">
+				<span class="input-group-addon">Discoverer</span>
+				{% if user == none %}
+				<input type="text" id="form-discoverer" class="form-control" placeholder="Yes, you!" name="discoverer">
+				{% else %}
+				<input type="text" id="form-discoverer" class="form-control" name="discoverer" value="{{user}}">
+				{% endif %}					
 			</div>
 
 			<div class="input-group">
-					<span class="input-group-addon">Species</span>
-					<input type="text" id="form-title" class="form-control" placeholder="Whatcha got there?" name="title">
+				<span class="input-group-addon">Species</span>
+				{% if title == none %}
+				<input type="text" id="form-title" class="form-control" placeholder="Whatcha got there?" name="title">
+				{% else %}
+				<input type="text" id="form-title" class="form-control" name="title" value="{{title}}">
+				{% endif %}
 			</div>
 
 			<div class="input-group">
@@ -34,3 +43,4 @@
 		</div>
 	</div>
 </div> <!-- end form fields -->
+
