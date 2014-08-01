@@ -15,27 +15,27 @@ void setup()
 {
   doResize();
   smooth();
-  frameRate( 30 );
+  frameRate( 15 );
+  background(250);
   
   flockList = makeFlocks( 80, 80 ); // min flock size, max total creatures.
-  
 }
 
 void draw()
 {
-  background( 255, 255, 255 );
-  
-  for ( Flock f : flockList ) { f.draw(); }
+  //background( 255, 255, 255 );
+  if ( flockList != null )
+  {
+    for ( Flock f : flockList ) { f.draw(); }
+  }
 
 }
 
 // JS RESIZE TO BROWSER //
 function doResize()
 {
-var setupHeight = Math.max($(document).height(), $(window).height());
-$('#PortfolioBackground').width($(window).width());
-$('#PortfolioBackground').height(setupHeight);
-size($(window).width(), setupHeight);
+    var setupHeight = Math.max($(document).height(), $(window).height());
+    size($(window).width(), setupHeight);
 }
 $(window).resize(doResize);
 
@@ -47,9 +47,7 @@ class Flock
   Creature[] creatures;
   int size, trailDelay, trailFade;
   Behavior behavior;
-  
-  PGraphics pg1, pg2;
-  
+    
   float localRange = 60;
   float wanderStrength = 1;
   float aliStrength = 1;
@@ -60,7 +58,6 @@ class Flock
   float fleeStrength = sepStrength * 1.75;
   
   float wallStrength = 2;
-  float flowStrength = 0.5;
   float proxMin =  30;
   float proxMax = 45;
   
@@ -69,12 +66,6 @@ class Flock
     size = n;
     creatures = new Creature[ size ];    
     behavior = new Behavior( this );
-    
-    pg1 = createGraphics( width, height );
-    pg2 = createGraphics( width, height );
-    pg2.beginDraw(); pg2.endDraw();
-    trailDelay = int( random( 1, 3 ) );
-    trailFade = int( random( 150, 245 ) );
     
     for ( int i = 0; i < size; i++ ) 
     {
@@ -89,53 +80,16 @@ class Flock
     }    
   }
   
-  void contrailsOn()
-  {
-    pg2.beginDraw();
-    pg2.background( 0, 0, 0, 0 ); // clear
-    pg2.tint( 255, trailFade );
-    pg2.image( pg1.get(), 0, 0 ); 
-    pg2.endDraw();
-  }
-  
-  void contrailsOff()
-  {
-    pg1.beginDraw();
-    pg1.background( 0, 0, 0, 0 );
-    pg1.image( pg2.get(), 0, 0 );
-    pg1.endDraw();
-    
-    pg2.beginDraw();
-    pg2.background( 0, 0, 0, 0 );
-    pg2.tint( 255, trailFade );
-    pg2.image( pg1, 0, 0 );
-    pg2.endDraw();
-  }
-  
   void draw()
   {
-    if ( true && ( frameCount % trailDelay == 0 ) )
-    {
-      contrailsOn();
-    }
-    else if ( !true && frameCount % trailDelay == 0 ) // frameCount check makes trails disappear more slowly
-    {
-      contrailsOff();
-    }
-    
-    pg1.beginDraw();
-    pg1.background( 0, 0, 0, 0 );
-    pg1.image( pg2, 0, 0 );
-    pg1.tint( 255, 255 );
+    fill( 250, 55 );
+    rect( 0, 0, width, height );
     for ( Creature k : creatures )
     {
       k.update();
       k.move();
-      k.draw( pg1 );
+      k.draw();
     }
-    pg1.endDraw();
-    
-    image( pg1, 0, 0 );
   }
   
 }
@@ -223,20 +177,19 @@ class Creature
     checkWrap();
   }
       
-  // draw    
-  void draw( PGraphics pg )
+  void draw()
   {
     float rotation = vel.heading();
-    pg.stroke( 2 );
-    pg.stroke( cstroke );
-    pg.fill( cfill );
+    stroke( 2 );
+    stroke( cstroke );
+    fill( cfill );
     
-    pg.pushMatrix();
-    pg.translate( pos.x, pos.y );
-    pg.rotate( rotation );
+    pushMatrix();
+    translate( pos.x, pos.y );
+    rotate( rotation );
     
-    pg.triangle( -r, r/2, r, 0, -r, -r/2 );
-    pg.popMatrix();
+    triangle( -r, r/2, r, 0, -r, -r/2 );
+    popMatrix();
     
   }
 }
@@ -363,16 +316,4 @@ class Behavior
      steer.mult( flock.aliStrength ); 
      return steer;       
   }
-  
-  // flow following
-  PVector followFlow( Creature c )
-  {
-    PVector desired = perlinFlow.lookup( c.pos ); //perlinFlow is global
-    desired.setMag( c.maxSpeed );
-    PVector steer = PVector.sub( desired, c.vel );
-    steer.limit( c.maxForce );
-    steer.mult( flock.flowStrength );
-    return steer;
-  }
-  
 }
