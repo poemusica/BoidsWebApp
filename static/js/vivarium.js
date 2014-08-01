@@ -17,7 +17,7 @@ function bindJavascript()
 function toggleBorder()
 {
 	if ($("canvas#main-sketch").css("border-width") == "0px")
-	{ $("canvas#main-sketch").css("border-width","5px"); }
+	{ $("canvas#main-sketch").css("border-width","7px"); }
 	else { $("canvas#main-sketch").css("border-width","0px"); }
 }
 
