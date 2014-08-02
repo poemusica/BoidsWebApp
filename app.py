@@ -22,15 +22,12 @@ def index():
 	"""This is the landing page."""
 	session['img_data']['title_id'] = None
 	session['img_data']['title'] = None#{'title_id': None, 'title': None, 'user': None}
-	print "SESSION @ index 1", session
 	session['img_data']['user'] = session['img_data'].get('user', None)
-	print "SESSION @ index 2", session
 	return render_template("index.html")
 
 # post data from form
 @app.route("/getform", methods=['GET'])
 def getform():
-	print "SESSON @ getform", session
 	template_vales = { 'user': session['img_data']['user'], 'title': None }
 	if session['img_data'].get('title_id'):
 		image = model.session.query(model.Image).filter_by(id=session['img_data']['title_id']).first()
@@ -58,8 +55,6 @@ def postdata():
 			session['img_data']['user'] = None
 		else:
 			session['img_data']['user'] = image.user.name
-
-		print "SESSION @ postdata", session
 		return render_template("_save_confirmation.html", image_id=image.id, hostname=host)
 	else:
 		return "sry, no data 4 u." # debug line.

@@ -43,7 +43,7 @@ function saveImage()
 		data : "form please",
 		success: function(data, textStatus, jqXHR)
 		{
-			console.log("get success", data); //debug line
+			console.log("get success"); //debug line
 			$("div#form-content").html(data);
 			var myimg = $("#form-image")[0];
 			myimg.src=img;
@@ -78,7 +78,7 @@ function postdata()
 		data : formData,
 		success: function(data, textStatus, jqXHR)
 		{
-			console.log("post success", data); //debug line
+			console.log("post success"); //debug line
 			$("a#close-form").text('close');
 			$("a#post-data-btn").hide();
 			$("div#form-content").html(data);
