@@ -7,18 +7,20 @@
         <canvas id="gallery-sketch" data-processing-sources="
         /static/processes/gallery/gallery.pde"></canvas>
     </div>
-l
+
+
+    {% for display_image in images %}
 	<div id="image-container" class="container">
 		<div class="row clearfix">
 
 			<div class="col-md-6 column">
 				<div id="image-thumbnail" class="thumbnail image-detail">
-					<h4 id="form-intro">{{display_image.imagemetadata.title}}</h4>
-					</p>discovered by {{display_image.user.name}}</p>
+					<h4 id="form-intro">{{ display_image['title'] }}</h4>
+					</p>discovered by {{ display_image['user'] }}</p>
 
 					<div class="row clearfix">
 						<div class=" col-md-12 column image-container">
-							<img id="image-detail" src="/captures/{{display_image.filename}}.jpg"> <!-- image goes here -->
+							<img id="image-detail" src="/captures/{{ display_image['filename'] }}.jpg"> <!-- image goes here -->
 						</div>
 					</div>
 				</div>
@@ -27,12 +29,13 @@ l
 			<div class="col-md-6 column">
 				<div id="image-thumbnail" class="thumbnail image-detail">
 						<h4>field notes</h4>
-						<p><pre>{{display_image.imagemetadata.description}}</pre></p>
+						<p><pre>{{ display_image['description'] }}</pre></p>
 				</div>
 			</div>
 		
 		</div>
 	</div>
+	{% endfor %}
 
 </div> <!-- end outer-div -->
 

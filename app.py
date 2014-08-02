@@ -117,26 +117,45 @@ def serve_image(filename):
 	f = open('captures/%s'%filename, 'rb')
 	return send_file(f, mimetype="image/jpeg")
 
+def model_to_list(model_list):
+	result = []
+	for entry in model_list:
+		default_title = "unnamed"
+		default_description = "little is known about these specimens"
+		d = {	'id': entry.image_id,
+				'title': entry.title if entry.title else default_title,
+				'description': entry.description if entry.description else default_description,
+				'user': entry.images.user.name,
+				'filename': entry.images.filename	}
+		result.append(d)
+	return result
+
 # gallery item permalinks
 @app.route("/gallery/<id>")
 def permalink(id):
-	image = model.session.query(model.Image).filter_by(id=id).first()
-	if image.imagemetadata.title == '':
-		image.imagemetadata.title = 'unnamed'
-	if image.imagemetadata.description == '':
-		image.imagemetadata.description = 'little is known about these specimens'
-	return render_template("image_details.html", display_image=image)
+	img = model.session.query(model.ImageMetaData).filter_by(image_id=id).first()
+	print "DEBUG", img.title
+
+	template_values = model_to_list([img])
+
+	if img.title == '':
+		template_values[0]['title'] = 'unnamed'
+
+	else:
+		other_imgs = model.session.query(model.ImageMetaData).filter_by(title=img.title).order_by(model.ImageMetaData.id.desc()).limit(30).all()
+		other_imgs.remove(img)
+		template_values.extend(model_to_list(other_imgs))
+
+	print template_values
+	return render_template("image_details.html", images=template_values)
 
 # gallery page
 @app.route("/gallery")
 def gallery():
-	image_list = model.session.query(model.Image).order_by(model.Image.id.desc()).limit(30).all()
-	for image in image_list:
-		if image.imagemetadata.title == '':
-			image.imagemetadata.title = 'unnamed'
-		if image.imagemetadata.description == '':
-			image.imagemetadata.description = 'little is known about these specimens'
-	return render_template("gallery.html", images=image_list)
+	image_list = model.session.query(model.ImageMetaData).order_by(model.ImageMetaData.id.desc()).limit(30).all()
+	template_values = model_to_list(image_list)
+
+	return render_template("gallery.html", images=template_values)
 
 
 if __name__ == "__main__":
