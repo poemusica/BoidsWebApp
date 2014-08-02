@@ -1,7 +1,7 @@
 body {
   min-height: 400px;
   min-width: 400px;
-  background-color: #FAFAFA;
+  background-color: #F8F8F8;
 }
 
 .navbar-static-top {
@@ -34,7 +34,7 @@ img#form-image {
 }
 
 div#form-modal{
-  background-color: #FAFAFA;
+  background-color: #F8F8F8;
 }
 
 div.form-field-container {
