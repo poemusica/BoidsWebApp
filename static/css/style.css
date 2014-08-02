@@ -31,7 +31,10 @@ div.image-container {
 
 img#form-image {
   width: 100%;
-  border: 0.2em solid gray;
+}
+
+div#form-modal{
+  background-color: #FAFAFA;
 }
 
 div.form-field-container {
@@ -65,7 +68,6 @@ div.thumbnail.image-detail {
 
 img#image-detail {
   width: 100%;
-  border: 0.2em solid gray;
 }
 
 div.thumbnail.image-detail pre {

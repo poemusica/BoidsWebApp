@@ -9,33 +9,42 @@
     </div>
 
 
-    {% for display_image in images %}
-	<div id="image-container" class="container">
+    <div class="container">
 		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<h2>notes on {{ images[0]['title'] }}</h2>
 
-			<div class="col-md-6 column">
-				<div id="image-thumbnail" class="thumbnail image-detail">
-					<h4 id="form-intro"><a href="/gallery/{{ display_image['id'] }}">{{ display_image['title'] }}</a></h4>
-					</p>discovered by <a href="/discoverer/{{ display_image['user_id'] }}">{{ display_image['user'] }}</a></p>
+				    {% for display_image in images %}
 
 					<div class="row clearfix">
-						<div class=" col-md-12 column image-container">
-							<img id="image-detail" src="/captures/{{ display_image['filename'] }}.jpg"> <!-- image goes here -->
+
+						<div class="col-md-6 column">
+							<div id="image-thumbnail" class="thumbnail image-detail">
+								<h4 id="form-intro"><a href="/gallery/{{ display_image['id'] }}">{{ display_image['title'] }}</a></h4>
+								</p>discovered by <a href="/discoverer/{{ display_image['user_id'] }}">{{ display_image['user'] }}</a></p>
+
+								<div class="row clearfix">
+									<div class=" col-md-12 column image-container">
+										<img id="image-detail" src="/captures/{{ display_image['filename'] }}.jpg"> <!-- image goes here -->
+									</div>
+								</div>
+							</div>
 						</div>
+						
+						<div class="col-md-6 column">
+							<div id="image-thumbnail" class="thumbnail image-detail">
+									<h4>fieldnotes</h4>
+									<p><pre>{{ display_image['description'] }}</pre></p>
+							</div>
+						</div>
+					
 					</div>
-				</div>
+
+					{% endfor %}
+
 			</div>
-			
-			<div class="col-md-6 column">
-				<div id="image-thumbnail" class="thumbnail image-detail">
-						<h4>field notes</h4>
-						<p><pre>{{ display_image['description'] }}</pre></p>
-				</div>
-			</div>
-		
 		</div>
 	</div>
-	{% endfor %}
 
 </div> <!-- end outer-div -->
 

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div id="outer-div">
+
+    <div id="canvas-gallery-div">
+        <canvas id="gallery-sketch" data-processing-sources="
+        /static/processes/gallery/gallery.pde"></canvas>
+    </div>
+
+
+    <div class="container">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<h2>research by {{ images[0]['user'] }}</h2>
+
+
+				    {% for display_image in images %}
+					<!-- <div id="image-container" class="container"> -->
+						<div class="row clearfix">
+
+							<div class="col-md-6 column">
+								<div id="image-thumbnail" class="thumbnail image-detail">
+									<h4 id="form-intro"><a href="/gallery/{{ display_image['id'] }}">{{ display_image['title'] }}</a></h4>
+									</p>discovered by <a href="/discoverer/{{ display_image['user_id'] }}">{{ display_image['user'] }}</a></p>
+
+									<div class="row clearfix">
+										<div class=" col-md-12 column image-container">
+											<img id="image-detail" src="/captures/{{ display_image['filename'] }}.jpg"> <!-- image goes here -->
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-6 column">
+								<div id="image-thumbnail" class="thumbnail image-detail">
+										<h4>fieldnotes</h4>
+										<p><pre>{{ display_image['description'] }}</pre></p>
+								</div>
+							</div>
+						
+						</div>
+					<!-- </div> -->
+					{% endfor %}
+
+			</div>
+		</div>
+	</div>
+
+</div> <!-- end outer-div -->
+
+{% endblock %}

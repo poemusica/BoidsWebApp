@@ -177,7 +177,7 @@ def user_page(id):
 
 	template_values = model_to_list(image_list)
 		
-	return render_template("image_details.html", images=template_values)
+	return render_template("user_details.html", images=template_values)
 	
 
 if __name__ == "__main__":

@@ -79,7 +79,7 @@ function postdata()
 		success: function(data, textStatus, jqXHR)
 		{
 			console.log("post success", data); //debug line
-			$("a#close-form").text('Close');
+			$("a#close-form").text('close');
 			$("a#post-data-btn").hide();
 			$("div#form-content").html(data);
 		},
