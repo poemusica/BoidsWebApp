@@ -16,6 +16,10 @@ app.config.update(
 app.jinja_env.undefined = jinja2.StrictUndefined
 
 
+@app.before_request
+def setup_session():
+	session['img_data'] = session.get('img_data', {'title_id': None, 'title': None, 'user': None})
+
 # landing page
 @app.route("/", methods=['GET'])
 def index():
