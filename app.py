@@ -20,14 +20,18 @@ app.jinja_env.undefined = jinja2.StrictUndefined
 @app.route("/", methods=['GET'])
 def index():
 	"""This is the landing page."""
-	session.clear()
-	session['img_data'] = {'title_id': None, 'title': None, 'user': None}
+	session['img_data']['title_id'] = None
+	session['img_data']['title'] = None#{'title_id': None, 'title': None, 'user': None}
+	print "SESSION @ index 1", session
+	session['img_data']['user'] = session['img_data'].get('user', None)
+	print "SESSION @ index 2", session
 	return render_template("index.html")
 
 # post data from form
 @app.route("/getform", methods=['GET'])
 def getform():
-	template_vales = { 'user': None, 'title': None }
+	print "SESSON @ getform", session
+	template_vales = { 'user': session['img_data']['user'], 'title': None }
 	if session['img_data'].get('title_id'):
 		image = model.session.query(model.Image).filter_by(id=session['img_data']['title_id']).first()
 		if image.user.name != 'anonymous':
@@ -48,9 +52,14 @@ def postdata():
 	if commit_data(formdata):
 		image = model.session.query(model.Image).filter_by(filename=filename).first()
 		host = request.host
-		session['img_data']["title_id"] = image.id
-		session['img_data']["title"] = image.imagemetadata.title
-		session['img_data']["user"] = image.user.name
+		session['img_data']['title_id'] = image.id
+		session['img_data']['title'] = image.imagemetadata.title
+		if image.user.name == 'anonymous':
+			session['img_data']['user'] = None
+		else:
+			session['img_data']['user'] = image.user.name
+
+		print "SESSION @ postdata", session
 		return render_template("_save_confirmation.html", image_id=image.id, hostname=host)
 	else:
 		return "sry, no data 4 u." # debug line.
@@ -126,6 +135,7 @@ def model_to_list(model_list):
 				'title': entry.title if entry.title else default_title,
 				'description': entry.description if entry.description else default_description,
 				'user': entry.images.user.name,
+				'user_id': entry.images.user.id,
 				'filename': entry.images.filename	}
 		result.append(d)
 	return result
@@ -134,7 +144,6 @@ def model_to_list(model_list):
 @app.route("/gallery/<id>")
 def permalink(id):
 	img = model.session.query(model.ImageMetaData).filter_by(image_id=id).first()
-	print "DEBUG", img.title
 
 	template_values = model_to_list([img])
 
@@ -146,7 +155,6 @@ def permalink(id):
 		other_imgs.remove(img)
 		template_values.extend(model_to_list(other_imgs))
 
-	print template_values
 	return render_template("image_details.html", images=template_values)
 
 # gallery page
@@ -157,6 +165,20 @@ def gallery():
 
 	return render_template("gallery.html", images=template_values)
 
+# gallery page
+@app.route("/discoverer/<id>")
+def user_page(id):
+	user = model.session.query(model.User).filter_by(id=id).first()
+
+	model_list = user.images
+	image_list = []
+	for i in model_list:
+		image_list.append( i.imagemetadata );
+
+	template_values = model_to_list(image_list)
+		
+	return render_template("image_details.html", images=template_values)
+	
 
 if __name__ == "__main__":
 	app.run(debug=True, host='0.0.0.0', port=80) #changed to port 80 for AWS web server

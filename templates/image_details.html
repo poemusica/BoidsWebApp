@@ -15,8 +15,8 @@
 
 			<div class="col-md-6 column">
 				<div id="image-thumbnail" class="thumbnail image-detail">
-					<h4 id="form-intro">{{ display_image['title'] }}</h4>
-					</p>discovered by {{ display_image['user'] }}</p>
+					<h4 id="form-intro"><a href="/gallery/{{ display_image['id'] }}">{{ display_image['title'] }}</a></h4>
+					</p>discovered by <a href="/discoverer/{{ display_image['user_id'] }}">{{ display_image['user'] }}</a></p>
 
 					<div class="row clearfix">
 						<div class=" col-md-12 column image-container">
