@@ -6,6 +6,7 @@ FlowField perlinFlow;
 Theme theme;
 Texture bgTexture;  // this should eventually be a background art object.
 Cursor cursor;
+int trailFade; 
 
 // Bind Javascript
 interface Javascript {}
@@ -27,12 +28,19 @@ void setup()
   controls = new ControlPanel(); // make native buttons
   perlinFlow = new FlowField( 25 ); // make vector field
   cursor = new Cursor();
+  trailFade = int(random( 30, 200 ));
 }
 
 
 void draw()
 {
+  boolean trailVal = controls.buttons[(int)controls.buttonsIndex.get("trails")].state;
+  if ( trailVal )
+  {
+    tint( 255, 50 );
+  }
   bgTexture.draw();
+  tint( 255, 255 );
   
   if ( controls.buttons[(int)controls.buttonsIndex.get("flow")].state )
   { perlinFlow.update(); perlinFlow.draw(); }
@@ -42,7 +50,12 @@ void draw()
   
   for ( Flock f : flockList ) { f.draw(); }
   
+  if ( trailVal )
+  {
+    tint( 255, 60 );
+  }
   cursor.draw();
+  tint( 255, 255 );
   
   //println( frameRate ); // benchmark
 }

@@ -90,19 +90,18 @@ class Creature
   }
       
   // draw    
-  void draw( PGraphics pg )
+  void draw()
   {
     float rotation = vel.heading();
-    pg.stroke( 2 );
-    pg.stroke( cstroke );
-    pg.fill( cfill );
+    stroke( 2 );
+    stroke( cstroke );
+    fill( cfill, myFlock.alpha );
     
-    pg.pushMatrix();
-    pg.translate( pos.x, pos.y );
-    pg.rotate( rotation );
+    pushMatrix();
+    translate( pos.x, pos.y );
+    rotate( rotation );
     
-    pg.triangle( -r, r/2, r, 0, -r, -r/2 );
-    pg.popMatrix();
-    
+    triangle( -r, r/2, r, 0, -r, -r/2 );
+    popMatrix();
   }
 }

@@ -19,8 +19,26 @@ class Cursor
   int r = 80;
   float mX;
   float mY;
+  PGraphics pg_light;
+  PGraphics pg_shadow;
+  PGraphics pg;
   
-  Cursor(){}
+  Cursor()
+  {
+    pg_light = createGraphics( r, r );
+    pg_light.beginDraw();
+    pg_light.fill( 255, 80 );
+    pg_light.noStroke();
+    pg_light.ellipse( r/2, r/2, r, r );
+    pg_light.endDraw();
+    
+    pg_shadow = createGraphics( r, r );
+    pg_shadow.beginDraw();
+    pg_shadow.fill( 0, 80 );
+    pg_shadow.noStroke();
+    pg_shadow.ellipse( r/2, r/2, r, r );
+    pg_shadow.endDraw();
+  }
   
   void reset()
   { mX = -r * 3; mY = -r * 3; }
@@ -29,21 +47,18 @@ class Cursor
   {
     if ( controls.buttons[(int)controls.buttonsIndex.get("attract")].state )
     {
-      fill( color( 255, 255, 255, 80 ) );
-      noStroke();
+      image( pg_light, mX - r/2, mY - r/2 );
     }
     else if ( controls.buttons[(int)controls.buttonsIndex.get("repel")].state )
     {
-      fill( color( 0, 0, 0, 80 ) );
-      noStroke();
+      image( pg_shadow, mX - r/2, mY - r/2 );
     }
     else
     { reset(); }
     
     if ( mouseX < 2 || mouseY < 2 || mouseX > width - 2 || mouseY > height -2  )
     { reset(); }
-    
-    ellipse( mX, mY, r, r ); 
+     
   }
   
 }
