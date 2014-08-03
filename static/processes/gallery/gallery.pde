@@ -16,6 +16,7 @@ void setup()
   doResize();
   smooth();
   frameRate( 15 );
+  background( 240 );
 
   flockList = makeFlocks( 80, 80 ); // min flock size, max total creatures.
 }
