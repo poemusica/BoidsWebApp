@@ -178,6 +178,11 @@ def user_page(id):
 		
 	return render_template("user_details.html", images=template_values)
 	
+# about page
+@app.route("/about", methods=['GET'])
+def about_page():
+	return render_template("about.html")
+
 
 if __name__ == "__main__":
 	app.run(debug=True, host='0.0.0.0', port=80) #changed to port 80 for AWS web server
