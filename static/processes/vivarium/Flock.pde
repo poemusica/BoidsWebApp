@@ -67,7 +67,7 @@ ArrayList<Flock> makeFlocks( int lo, int hi )
   int i = hi;
   while ( i >= lo )
   {
-    int num = int( random( lo, i ) );
+    int num = int( ( random( lo, i ) ) );
     Flock f = new Flock( num );
     flocks.add( f );
     i -= num;

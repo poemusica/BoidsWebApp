@@ -6,6 +6,7 @@ FlowField perlinFlow;
 Theme theme;
 Texture bgTexture;  // this should eventually be a background art object.
 Cursor cursor;
+Debris debris;
 
 // Bind Javascript
 interface Javascript {}
@@ -22,11 +23,12 @@ void setup()
   frameRate( 30 );
   
   theme = new Theme(); // 'import' color library
-  flockList = makeFlocks( 20, 100 ); // min flock size, max total creatures.
+  flockList = makeFlocks( 10, 150 ); // min flock size, max total creatures.
   bgTexture = new Texture();
   controls = new ControlPanel(); // make native buttons
   perlinFlow = new FlowField( 25 ); // make vector field
   cursor = new Cursor();
+  debris = new Debris( 100 );
 }
 
 
@@ -35,12 +37,14 @@ void draw()
   bgTexture.draw();
   
   if ( controls.buttons[(int)controls.buttonsIndex.get("flow")].state )
-  { perlinFlow.update(); perlinFlow.draw(); }
+  { perlinFlow.update(); }
     
   if ( javascript == null && frameCount > 30 ) // display buttons in native mode  only
   { controls.update(); controls.draw(); }
   
   for ( Flock f : flockList ) { f.draw(); }
+  
+  debris.draw();
   
   cursor.draw();
   

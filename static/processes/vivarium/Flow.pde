@@ -4,7 +4,7 @@ class FlowField
   int cols, rows, bookmark;
   PVector [][] field;
   color lineColor;
-  float fieldBias;
+  float fieldBias; // helps make directional changes more random
   float zoff = 0;
   PGraphics workingBuffer;
   PGraphics visibleBuffer;
