@@ -15,7 +15,7 @@ void setup()
 {
   doResize();
   smooth();
-  frameRate( 15 );
+  frameRate( 20 );
   background( 240 );
 
   flockList = makeFlocks( 80, 80 ); // min flock size, max total creatures.
@@ -82,6 +82,7 @@ class Flock
   void draw()
   {
     fill( 248, 55 );
+    noStroke();
     rect( 0, 0, width, height );
     for ( Creature k : creatures )
     {
