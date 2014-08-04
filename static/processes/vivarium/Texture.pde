@@ -1,39 +1,34 @@
 class Texture
 {
   PImage pimage;
-  color base;
-  int offset;
+  color base, lo, hi;
+  int numBuckets = 20; // determines the granularity of color variation in the background texture
+  int bucketSize = 1 / numBuckets;
+  int perlinZoom; // lower is zoomed out with many features, higher is zoomed in with fewer features.
   
-  Texture( color c )
+  Texture()
   {
     pimage = createImage( width, height, RGB );
-    base = c;
-    offset = 75;
-    
+    base = color( random( 0, 255 ), random( 0, 255 ), random( 0, 255 ) );
+    lo = lerpColor( base, color( 0 ), 0.5 );
+    hi = lerpColor( base, color( 255 ), 0.75 ); // biased toward lighter colors
+    perlinZoom = 1000; // 1000x zoom
     
     for ( int x = 0; x < width; x++ )
     {
       for ( int y = 0; y < height; y++ )
       {
-        color pixelColor = perlinPixel( float( x ) / 100, float( y ) / 100 );
-        pimage.pixels[ y * width + x ] =  pixelColor;
+        color pixelColor = perlinPixel( float( x ) / perlinZoom, float( y ) / perlinZoom );
+        pimage.pixels[ ( y * width ) + x ] =  pixelColor; // pixels are a list. y * width gets you into desired row. + x gets you to desired column.
       }
     }
   }
   
   color perlinPixel( float x, float y )
   {
-    float rval = noise( x, y );
-    int r1 = int( map( rval, 0, 1, -offset, offset ) );
-    
-    float gval = noise( x, y );
-    int g1 = int( map( gval, 0, 1, -offset, offset ) );
-    
-    float bval = noise( x, y );
-    int b1 = int( map( bval, 0, 1, -offset, offset ) );
-    
-    color c = color( red( base ) + r1, green( base ) + g1, blue( base ) + b1 );
-    return c;
+    float noiseVal = noise( x, y );
+    int bucket = int ( map( noiseVal, 0, 1, 0, numBuckets ) ); // determines which color-bucket to use
+    return lerpColor( lo, hi, bucket  * bucketSize );
   }
   
   void draw()

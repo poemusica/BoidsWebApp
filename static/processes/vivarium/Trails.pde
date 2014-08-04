@@ -9,10 +9,10 @@ class Trail
   
   Trail( Creature k )
   {
-    points = new PVector[ segments ]; 
-    frames = new int[ segments ];
     owner = k;
     segments = owner.myFlock.trailSegs;
+    points = new PVector[ segments ]; 
+    frames = new int[ segments ];
     maxAge = owner.myFlock.framesPerPoint * segments;
     
     reset();

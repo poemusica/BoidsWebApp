@@ -23,7 +23,7 @@ void setup()
   
   theme = new Theme(); // 'import' color library
   flockList = makeFlocks( 20, 100 ); // min flock size, max total creatures.
-  bgTexture = new Texture( theme.backgroundColor( flockList.get( 0 ).theme1, flockList.get( 0 ).theme2 ) ); // bg uses 1st flock's color complement
+  bgTexture = new Texture();
   controls = new ControlPanel(); // make native buttons
   perlinFlow = new FlowField( 25 ); // make vector field
   cursor = new Cursor();
