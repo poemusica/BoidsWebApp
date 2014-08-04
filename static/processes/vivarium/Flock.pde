@@ -1,10 +1,10 @@
 class Flock
 {
   Creature[] creatures;
-  int size, trailDelay, trailFade;
+  int size;
+  int framesPerPoint, trailSegs; // determines trail length
   Behavior behavior;
   
-  PGraphics pg1, pg2;
   color theme1, theme2, ptheme;
   
   float localRange = 60;
@@ -27,11 +27,9 @@ class Flock
     creatures = new Creature[ size ];    
     behavior = new Behavior( this );
     
-    pg1 = createGraphics( width, height );
-    pg2 = createGraphics( width, height );
-    pg2.beginDraw(); pg2.endDraw();
-    trailDelay = int( random( 1, 3 ) );
-    trailFade = int( random( 150, 245 ) );
+    framesPerPoint = int( random( 2, 4 ) ); // these numbers are tuned, but somewhat arbitrary
+    trailSegs = int( random( 3, 10) ); 
+   
     theme1 = theme.randomColor( 0, 255 );
     theme2 = theme.randomColor( 0, 255 );
     ptheme = theme.randomColor( 75, 255 - 75 );
@@ -48,54 +46,15 @@ class Flock
       creatures[ i ] = k;
     }    
   }
-  
-  void contrailsOn()
-  {
-    pg2.beginDraw();
-    pg2.background( 0, 0, 0, 0 ); // clear
-    pg2.tint( 255, trailFade );
-    pg2.image( pg1.get(), 0, 0 ); 
-    pg2.endDraw();
-  }
-  
-  void contrailsOff()
-  {
-    pg1.beginDraw();
-    pg1.background( 0, 0, 0, 0 );
-    pg1.image( pg2.get(), 0, 0 );
-    pg1.endDraw();
     
-    pg2.beginDraw();
-    pg2.background( 0, 0, 0, 0 );
-    pg2.tint( 255, trailFade );
-    pg2.image( pg1, 0, 0 );
-    pg2.endDraw();
-  }
-  
   void draw()
   {
-    boolean trailVal = controls.buttons[(int)controls.buttonsIndex.get("trails")].state;
-    if ( trailVal && ( frameCount % trailDelay == 0 ) )
-    {
-      contrailsOn();
-    }
-    else if ( !trailVal && frameCount % trailDelay == 0 ) // frameCount check makes trails disappear more slowly
-    {
-      contrailsOff();
-    }
-    
-    pg1.beginDraw();
-    pg1.background( 0, 0, 0, 0 );
-    pg1.image( pg2, 0, 0 );
     for ( Creature k : creatures )
     {
       k.update();
       k.move();
-      k.draw( pg1 );
+      k.draw();
     }
-    pg1.endDraw();
-    
-    image( pg1, 0, 0 );
   }
   
 }
