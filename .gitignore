@@ -1,6 +1,6 @@
 env
 captures
-easy_install
+Thumbs.db
 pg_hba.conf
 *.pyc
 .DS_Store

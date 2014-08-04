@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div id="outer-div">
+
+    <div id="canvas-gallery-div">
+        <canvas id="gallery-sketch" data-processing-sources="
+        /static/processes/gallery/gallery.pde"></canvas>
+    </div>
+
+	<div class="container"> <!-- main container -->
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<h2>about this project</h2>
+				<div class="row clearfix">
+					<div class="col-md-6 column"> 
+						<div class="row clearfix">
+							<div class="col-md-6 column"> <!-- image 1 -->
+								<div id="image-thumbnail" class="thumbnail image-detail">
+									<div class="row clearfix">
+										<div class=" col-md-12 column image-container">
+											<img id="image-detail" src="/static/assets/workstation-pc.jpg">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 column"> <!-- image 2 -->
+								<div id="image-thumbnail" class="thumbnail image-detail">
+									<div class="row clearfix">
+										<div class=" col-md-12 column image-container">
+											<img id="image-detail" src="/static/assets/workstation-mac.jpg">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 column">
+						<div id="image-thumbnail" class="thumbnail image-detail">
+							<p><a href="/">Ambient Garden Thriller</a> is an interactive ambient web experience powered by Processing.js and HTML5. Discover and document unique ephemeral 2D creatures that inhabit your browser. The appearance, desires, and locomotion of these lifeforms as well as their habitats are algorithmically generated with a dash of patterned randomness. Features include emergent flocking, scatter/swarm behaviors, and perlin flow fields. Take a snapshot of your discovery and explore the gallery to view glimpses of creatures that you and others have observed.</p> 
+							<p>Technology stack: Flask, Jinja2, AWS, Postgres, SQLAlchemy, Processing.js, JQuery, AJAX, Bootstrap, HTML5, CSS3.</p>
+							<p>Languages: Python, Javascript, Processing (Java-like).</p>
+							<p>Github: <a href="https://github.com/heatheramahan/AGT">heatheramahan/AGT</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<h2>about me</h2>
+				<div class="row clearfix">
+					<div class="col-md-6 column"> <!-- profile pic -->
+						<div id="image-thumbnail" class="thumbnail image-detail">
+							<div class="row clearfix">
+								<div class=" col-md-12 column image-container">
+									<img id="image-detail" src="/static/assets/selfie.jpg">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 column">
+						<div id="image-thumbnail" class="thumbnail image-detail">
+							<p>Heather hails from the technical writing field, where she has documented technology for Google, Netgear, and Tesla Motors. Prior to joining the tech industry as a writer, she earned her MA (Linguistics) and BA (Philosophy/Linguistics) from the University of California Santa Cruz, with an emphasis on natural language semantics. Her love of formal logic and puzzles brought her to field of computer science, which she has been dancing around since her college days. At last, she decided to attend <a href="http://www.hackbrightacademy.com/">Hackbright Academy</a> to become more than a just dabbler and gain the confidence to pursue a career in software engineering.</p>
+
+							<p>As a creative coder, Heather enjoys working at the intersection of art and algorithms. She looks forward to continually growing her programming chops and putting them to work in a role where she can help create (as well as document!) great products.</p>
+							<p>Professional profile: <a href="https://www.linkedin.com/in/heatheramahan">in/heatheramahan</a></p>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> <!-- end main-container -->
+
+</div> <!-- end outer-div -->
+
+{% endblock %}
