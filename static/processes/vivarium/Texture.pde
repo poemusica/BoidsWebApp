@@ -1,17 +1,17 @@
-class Texture
+class Texture // background topo-style image
 {
   PImage pimage;
   color base, lo, hi;
-  int numBuckets = 20; // determines the granularity of color variation in the background texture
-  int bucketSize = 1 / numBuckets;
+  int numBuckets = 20; // determines granularity of color variation. best to pick a range with quite a few middle-of-the-road options.
   int perlinZoom; // lower is zoomed out with many features, higher is zoomed in with fewer features.
   
+  // the goal is to discretize the perlin cloud into solid light and dark features
   Texture()
   {
     pimage = createImage( width, height, RGB );
     base = color( random( 0, 255 ), random( 0, 255 ), random( 0, 255 ) );
-    lo = lerpColor( base, color( 0 ), 0.5 );
-    hi = lerpColor( base, color( 255 ), 0.75 ); // biased toward lighter colors
+    lo = lerpColor( base, color( 0 ), 0.3 ); // darkest shade in range
+    hi = lerpColor( base, color( 255 ), 0.75 ); // lightest shade in range. biased toward lighter colors
     perlinZoom = 1000; // 1000x zoom
     
     for ( int x = 0; x < width; x++ )
@@ -27,8 +27,8 @@ class Texture
   color perlinPixel( float x, float y )
   {
     float noiseVal = noise( x, y );
-    int bucket = int ( map( noiseVal, 0, 1, 0, numBuckets ) ); // determines which color-bucket to use
-    return lerpColor( lo, hi, bucket  * bucketSize );
+    int bucket = int ( map( noiseVal, 0, 1, 1, numBuckets ) ); // determines which color-bucket to use
+    return lerpColor( lo, hi, bucket / numBuckets ); // lerp between darkest and lightest by some percentage
   }
   
   void draw()
