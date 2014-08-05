@@ -1,13 +1,14 @@
 class Flock
 {
   Creature[] creatures;
-  int size;
+  int size; // determines number of creature. "size" of flock.
   int framesPerPoint, trailSegs; // determines trail length
   Behavior behavior;
   
   color theme1, theme2, ptheme;
   
-  float localRange = 60;
+  // these variables are all tuned to a specific emergent formation. very touchy.
+  float localRange = 60; // creatures are only responsive to other creatures in their local range.
   float wanderStrength = 1;
   float aliStrength = 1;
   float cohStrength = 1;
@@ -18,17 +19,17 @@ class Flock
   
   float wallStrength = 2;
   float flowStrength = 0.5;
-  float proxMin =  30;
-  float proxMax = 45;
+  float proxMin =  30; // don't be closer than 30 pixels away
+  float proxMax = 45; // don't be farther than 45 pixels away
   
   Flock( int n )
   {
-    size = n;
+    size = n; // determines number of creature. "size" of flock.
     creatures = new Creature[ size ];    
-    behavior = new Behavior( this );
+    behavior = new Behavior( this ); // flocks have behaviors
     
-    framesPerPoint = int( random( 2, 4 ) ); // these numbers are tuned, but somewhat arbitrary
-    trailSegs = int( random( 3, 10) ); 
+    framesPerPoint = int( random( 2, 4 ) ); // how often creatures records their positions. inputs are tuned, but somewhat arbitrary
+    trailSegs = int( random( 3, 10) ); // how many segments make up creatures' trails
    
     theme1 = theme.randomColor( 0, 255 );
     theme2 = theme.randomColor( 0, 255 );
@@ -59,8 +60,8 @@ class Flock
   
 }
 
-
-ArrayList<Flock> makeFlocks( int lo, int hi )
+// creates multiple flocks
+ArrayList<Flock> makeFlocks( int lo, int hi ) // args: min creatures per flock, max number of creatures on screen
 {
   ArrayList<Flock> flocks;
  flocks = new ArrayList<Flock>(); 
