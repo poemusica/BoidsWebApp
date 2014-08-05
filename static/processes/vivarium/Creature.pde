@@ -63,7 +63,7 @@ class Creature
     applyForce( myFlock.behavior.wander( this ) );
     
     // flocking
-    if ( controls.buttons[(int)controls.buttonsIndex.get("flock")].state )
+    if ( ( (Button)controls.buttons.get("flock") ).state )
     {
       applyForce( myFlock.behavior.cohere( this ) );
       applyForce( myFlock.behavior.separate( this ) );
@@ -71,27 +71,27 @@ class Creature
     }
     
     // flow following 
-    if ( controls.buttons[(int)controls.buttonsIndex.get("flow")].state )
+    if ( ( (Button)controls.buttons.get("flow") ).state )
     {
      applyForce( myFlock.behavior.followFlow( this ) );
     }
     
     // attraction
-    if ( controls.buttons[(int)controls.buttonsIndex.get("attract")].state )
+    if ( ( (Button)controls.buttons.get("attract") ).state )
     {
       PVector target = new PVector( mouseX, mouseY );
       applyForce( myFlock.behavior.arrive( this, target ) );
     }
     
     // aversion
-    if ( controls.buttons[(int)controls.buttonsIndex.get("repel")].state )
+    if ( ( (Button)controls.buttons.get("repel") ).state )
     {
       PVector target = new PVector( mouseX, mouseY );
       applyForce( myFlock.behavior.flee( this, target ) );
     }
     
     // wall avoidance
-    if ( controls.buttons[(int)controls.buttonsIndex.get("walls")].state )
+    if ( ( (Button)controls.buttons.get("walls") ).state )
     { applyForce( myFlock.behavior.checkWall( this ) ); }
   }
   
@@ -104,7 +104,7 @@ class Creature
     pos.add( vel );
     acc.mult( 0 );
     
-    if ( !controls.buttons[(int)controls.buttonsIndex.get("walls")].state )
+    if ( !( (Button)controls.buttons.get("walls") ).state )
     { checkWrap(); }
   }
       
@@ -125,7 +125,7 @@ class Creature
     triangle( -r, r/2, r, 0, -r, -r/2 ); // draw creature
     popMatrix();
     
-    boolean trailVal = controls.buttons[(int)controls.buttonsIndex.get("trails")].state; // logic for trail fade out
+    boolean trailVal = ( (Button)controls.buttons.get("trails") ).state; // logic for trail fade out
     if ( trailVal )
     {
       if ( !trailsWereOn ) 

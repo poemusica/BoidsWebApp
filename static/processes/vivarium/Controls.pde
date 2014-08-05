@@ -1,11 +1,16 @@
 void mouseClicked( MouseEvent e )
 {
   if ( javascript != null ) { return; }
-  for (Button b : controls.buttons)
+  
+  Iterator i = controls.buttons.entrySet().iterator();  // Get an iterator 
+  while ( i.hasNext() )
   {
-    if ( b.contains(e.getX(), e.getY()) )
-    { handleClick(b.label); } 
+    Map.Entry me = ( Map.Entry )i.next();
+    Button b = (Button)me.getValue();
+    if ( b.contains( e.getX(), e.getY() )) 
+    { handleClick( b.label ); }
   }
+
 }
 
 void mouseMoved()
@@ -27,12 +32,12 @@ class Cursor
   
   void draw()
   {
-    if ( controls.buttons[(int)controls.buttonsIndex.get("attract")].state )
+    if ( ( (Button)controls.buttons.get("attract") ).state )
     {
       fill( color( 255, 255, 255, 80 ) );
       noStroke();
     }
-    else if ( controls.buttons[(int)controls.buttonsIndex.get("repel")].state )
+    else if ( ( (Button)controls.buttons.get("repel") ).state )
     {
       fill( color( 0, 0, 0, 80 ) );
       noStroke();
@@ -51,28 +56,21 @@ class Cursor
 
 class ControlPanel
 {
-  Button[] buttons;
-  HashMap<String,Integer> buttonsIndex;
+  HashMap buttons;
   PGraphics pg;
   boolean stale;
   
   ControlPanel()
-  {
-    buttons = new Button[6];
-    buttonsIndex = new HashMap<String,Integer>();
-    buttons[0] = new Button( new PVector( 10 , height - 60 ), 50, 35, "flock", true );
-    buttonsIndex.put( "flock", 0 );
-    buttons[1] = new Button( new PVector( 70, height - 60 ), 50, 35, "flow", false );
-    buttonsIndex.put( "flow", 1 );
-    buttons[2] = new Button( new PVector( 130, height - 60 ), 50, 35, "walls", false );
-    buttonsIndex.put( "walls", 2 );
-    buttons[3] = new Button( new PVector( 190, height - 60 ), 50, 35, "attract", false );
-    buttonsIndex.put( "attract", 3 );
-    buttons[4] = new Button( new PVector( 250, height - 60 ), 50, 35, "repel", false );
-    buttonsIndex.put( "repel", 4 );
-    buttons[5] = new Button( new PVector( 310, height - 60 ), 50, 35, "trails", false );
-    buttonsIndex.put( "trails", 5 );
-    
+  {    
+    buttons = new HashMap();
+  
+    buttons.put("flock", new Button( new PVector( 10 , height - 60 ), 50, 35, "flock", true ));
+    buttons.put("flow", new Button( new PVector( 70, height - 60 ), 50, 35, "flow", false ));
+    buttons.put("walls", new Button( new PVector( 130, height - 60 ), 50, 35, "walls", false ));
+    buttons.put("attract", new Button( new PVector( 190, height - 60 ), 50, 35, "attract", false ));
+    buttons.put("repel", new Button( new PVector( 250, height - 60 ), 50, 35, "repel", false ));
+    buttons.put("trails", new Button( new PVector( 310, height - 60 ), 50, 35, "trails", false ));
+       
     // fill buffer
     pg = createGraphics( width, height );
     stale = true;
@@ -82,10 +80,15 @@ class ControlPanel
  {
    pg.beginDraw();
    pg.background( 0, 0, 0, 0 );
-   for ( Button b : buttons )
+   
+   Iterator i = buttons.entrySet().iterator();  // Get an iterator 
+   while ( i.hasNext() )
    {
-     b.draw( pg );
-   }
+    Map.Entry me = ( Map.Entry )i.next();
+    Button b = (Button)me.getValue();
+    b.draw( pg );
+  }
+
    pg.endDraw();
    stale = false;
  }
@@ -147,19 +150,19 @@ class Button
 // Javascript Helper (must be top-level functions)
 void handleClick(String s)
 {
-  Button b = controls.buttons[(int)controls.buttonsIndex.get(s)];
+  Button b = (Button)controls.buttons.get(s);
   b.state = !b.state;
   b.swapColor();
 
   if (s == "attract")
   {
-    b = controls.buttons[(int)controls.buttonsIndex.get("repel")];
+    b = (Button)controls.buttons.get("repel");
     if ( b.state ) { b.state = false; b.swapColor(); cursor.reset(); }
   }
   
   else if (s == "repel")
   {
-    b = controls.buttons[(int)controls.buttonsIndex.get("attract")];
+    b = (Button)controls.buttons.get("attract");
     if ( b.state ) { b.state = false; b.swapColor(); cursor.reset(); }
   }
   

@@ -1,14 +1,19 @@
+// LIBRARIES //
+import java.util.Iterator;
+import java.util.Map;
+
 // PROGRAM GLOBALS //
 
-ArrayList<Flock> flockList;
-ControlPanel controls;
+ArrayList<Flock> flockList; // has flocks and flocks have creatures
+ControlPanel controls; // has buttons
 FlowField perlinFlow;
-Theme theme;
-Texture bgTexture;  // this should eventually be a background art object.
+Theme theme; // color 'library'
+Texture bgTexture;  // background art
 Cursor cursor;
-Debris debris;
+Debris debris; // has particles
 
-// Bind Javascript
+// Bind Javascript.
+// Lets processing determine whether it is running natively or in js. (for dev buttons) 
 interface Javascript {}
 Javascript javascript = null;
 void bindJavascript( Javascript js ) { javascript = js; }
@@ -23,12 +28,13 @@ void setup()
   frameRate( 30 );
   
   theme = new Theme(); // 'import' color library
-  flockList = makeFlocks( 10, 150 ); // min flock size, max total creatures.
+  flockList = makeFlocks( 10, 150 ); // args: min flock size, max total creatures.
   bgTexture = new Texture();
-  controls = new ControlPanel(); // make native buttons
-  perlinFlow = new FlowField( 25 ); // make vector field
+  controls = new ControlPanel(); // make dev buttons
+  perlinFlow = new FlowField( 25 );
   cursor = new Cursor();
-  debris = new Debris( 100 );
+  debris = new Debris( 100 ); // arg: number of particles
+  
 }
 
 
@@ -36,7 +42,7 @@ void draw()
 {
   bgTexture.draw();
   
-  if ( controls.buttons[(int)controls.buttonsIndex.get("flow")].state )
+  if ( ( (Button)controls.buttons.get("flow") ).state )
   { perlinFlow.update(); }
     
   if ( javascript == null && frameCount > 30 ) // display buttons in native mode  only
