@@ -3,16 +3,16 @@ class Particle
   PVector pos;
   PVector vel;
   int size;
-  Debris myDebris;
+  Debris myDebris; // particles are part of a group
   float mySpeed;
   
   Particle( Debris d ) 
   {
     myDebris = d;
     size = int( random( 4, myDebris.maxSize ) );
-    mySpeed = myDebris.speed / size;
+    mySpeed = myDebris.speed / size; // individual speed is determined by size
     pos = new PVector( random( 0, width ), random( 0, height ) );
-    vel = PVector.mult( PVector.random2D(), mySpeed );
+    vel = PVector.mult( PVector.random2D(), mySpeed ); 
   }
   
   void checkWrap()
@@ -31,17 +31,17 @@ class Particle
   
   void update()
   {
-    PVector inertia = PVector.mult( vel, 0.5 ); // damped and scaled verson of current vel
-    PVector drift = PVector.mult( PVector.random2D(), 0.5 ); // prevents particles of similar size from clumping
+    PVector inertia = PVector.mult( vel, 0.5 ); // damped and scaled verson of current vel. keep going in the direction you were going.
+    PVector drift = PVector.mult( PVector.random2D(), 0.5 ); // helps prevent particles of similar size from clumping
     PVector flowForce = perlinFlow.lookup( pos );
     
     vel = inertia;
-    vel.add( drift );
-    vel.add( flowForce );
+    vel.add( drift ); // acceleration from drift
+    vel.add( flowForce ); // acceleration from flow
     vel.setMag( mySpeed );
-    pos.add( vel );
+    pos.add( vel ); // move
     
-    checkWrap();
+    checkWrap(); // for screen wrap
   }
   
   void draw()
@@ -58,7 +58,7 @@ class Debris
   int n, maxSize; // number of particles, max size of particles
   int speed = 20;
   
-  Debris( int num )
+  Debris( int num ) // arg: number of particles
   {
     n = num;
     maxSize = int( random( 4, 100 ) );
