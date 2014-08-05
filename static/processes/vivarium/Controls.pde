@@ -1,6 +1,6 @@
-void mouseClicked( MouseEvent e )
+void mouseClicked( MouseEvent e ) // deal with clicks in native mode
 {
-  if ( javascript != null ) { return; }
+  if ( javascript != null ) { return; } // don't worry about native buttons unless javascript isn't bound
   
   Iterator i = controls.buttons.entrySet().iterator();  // Get an iterator 
   while ( i.hasNext() )
@@ -27,7 +27,7 @@ class Cursor
   
   Cursor(){}
   
-  void reset()
+  void reset() // move mouse shape offscreen
   { mX = -r * 3; mY = -r * 3; }
   
   void draw()
@@ -45,15 +45,16 @@ class Cursor
     else
     { reset(); }
     
+    // prevents mouse from getting stuck at edges when user moves mouse out of bounds
     if ( mouseX < 2 || mouseY < 2 || mouseX > width - 2 || mouseY > height -2  )
-    { reset(); }
+    { reset(); } // if mouse gets close to edge of screen, move it off screen.
     
     ellipse( mX, mY, r, r ); 
   }
   
 }
 
-
+// dev buttons for native mode
 class ControlPanel
 {
   HashMap buttons;
@@ -73,7 +74,7 @@ class ControlPanel
        
     // fill buffer
     pg = createGraphics( width, height );
-    stale = true;
+    stale = true; // has a button state been changed? do i need to update/refresh buffer?
   }
  
  void fillBuffer()
@@ -152,8 +153,9 @@ void handleClick(String s)
 {
   Button b = (Button)controls.buttons.get(s);
   b.state = !b.state;
-  b.swapColor();
+  b.swapColor(); // this line is only relevant in native mode.
 
+  // make sure attract and repel are mutually exclusive
   if (s == "attract")
   {
     b = (Button)controls.buttons.get("repel");
@@ -166,5 +168,5 @@ void handleClick(String s)
     if ( b.state ) { b.state = false; b.swapColor(); cursor.reset(); }
   }
   
-  controls.stale = true;
+  controls.stale = true; // the state of a button changed, so it needs to be redrawn
 }
