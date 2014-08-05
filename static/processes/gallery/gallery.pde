@@ -2,13 +2,6 @@
 
 ArrayList<Flock> flockList;
 
-
-// Bind Javascript
-interface Javascript {}
-Javascript javascript = null;
-void bindJavascript( Javascript js ) { javascript = js; }
-
-
 // MAIN SETUP AND DRAW //
 
 void setup()
@@ -23,20 +16,16 @@ void setup()
 
 void draw()
 {
-  if ( flockList != null )
-  {
     for ( Flock f : flockList ) { f.draw(); }
-  }
-
 }
 
 // JS RESIZE TO BROWSER //
 function doResize()
 {
-    var setupHeight = Math.max($(document).height(), $(window).height());
-    size($(window).width(), setupHeight);
+  size( $(window).width(), $(window).height() ); // resizes sketch to browser viewport size
 }
-$(window).resize(doResize);
+
+$(window).resize( doResize ); // whenever the viewport resizes, resize the sketch.
 
 
 // FLOCK DEFINITIONS //
