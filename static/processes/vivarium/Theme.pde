@@ -1,21 +1,16 @@
-class Theme
+class Theme // threw these methods into a class for organizational purposes
 {  
   Theme()
   {
-  }
-  
-  color backgroundColor( color t1, color t2 )
-  {
-    color t = lerpColor( t1, t2, 0.5 );
-    return color( 255 - red( t ), 255 - green( t ), 255 - blue( t ), 255 );
   }
   
   color randomColor( int lo, int hi ) 
   {
     return color( random( lo, hi ), random( lo, hi ), random( lo, hi ) );
   }
-  
-  color lerpPerlinColor( float n, color t1, color t2 ) // first variant of perlin color
+
+  // first variant of perlin color. used for creature fill
+  color lerpPerlinColor( float n, color t1, color t2 )
   {
     float amt = noise( red( t1 ) / 255 , n * 100 ); // tweak for web to produce variation
     amt = ( amt * 2 ) - 0.4; // tweak for web. attempt to widen and center output
@@ -23,15 +18,18 @@ class Theme
     return lerpColor( t1, t2, amt );
   }
   
-  color perlinColor( int n, color t, int offset ) // second variant of perlin color 
+  // second variant of perlin color. used for creature stroke
+  // this method requires input color's rgb values to be constrained by offset.
+  color perlinColor( int n, color t, int offset )  
   {
+    // break input color into its rgb values
     float r0 = red( t );
     float g0 = green( t );
     float b0 = blue( t );
     
-    float rval = noise( r0 / 255, n * 100 ); // tweak for web to produce variation
-    rval = ( rval * 2 ) - 0.4;  // tweak for web. attempt to widen and center output
-    rval = constrain( rval, 0, 1 ); // keep manual adjustments in range
+    float rval = noise( r0 / 255, n * 100 ); // tweaked for web to produce variation
+    rval = ( rval * 2 ) - 0.4;  // tweaked for web. attempt to widen and center output
+    rval = constrain( rval, 0, 1 ); // keeps manual adjustments in range
     int r1 = int( map( rval, 0, 1, -offset, offset ) );
     
     float gval = noise( g0 / 255, n * 100 );
@@ -44,7 +42,7 @@ class Theme
     bval = constrain( bval, 0, 1 );
     int b1 = int( map( bval, 0, 1, -offset, offset ) );
     
-    color c = color( r0 + r1, g0 + g1, b0 + b1, 255 );
+    color c = color( r0 + r1, g0 + g1, b0 + b1, 255 ); // add perlin-generated value to base rgb values
     return c;
   }
 }
