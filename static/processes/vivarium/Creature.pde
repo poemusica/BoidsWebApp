@@ -30,30 +30,32 @@ class Creature
   }
     
   // screen wrap
-  void checkWrap()
+  PVector checkWrap()
   {
+    PVector v = new PVector( 0, 0 );
     float buffer = 2 * r;   
     if ( pos.x < -r )
     {
       pos.x += width + buffer;
-      myTrail.translateAll( new PVector( width + buffer, 0 ) ); // translate trails according to new creature pos
+      v.x = width + buffer;
     }
     else if ( pos.x > width + r )
     {
       pos.x -= width + buffer;
-      myTrail.translateAll( new PVector( -( width + buffer ), 0 ) );
+      v.x = -( width + buffer );
     }
     
     if ( pos.y < -r )
     {
       pos.y += height + buffer;
-      myTrail.translateAll( new PVector( 0, height + buffer ) );
+      v.y = height + buffer;
     }
     else if ( pos.y > height + r )
     {
       pos.y -= height + buffer;
-      myTrail.translateAll( new PVector( 0, -( height + buffer ) ) );
+      v.y = -( height + buffer );
     }
+    return v;
   }
   
   // update
@@ -102,10 +104,13 @@ class Creature
     vel.add( acc );
     vel.limit( maxSpeed );
     pos.add( vel );
-    acc.mult( 0 );
+    acc.mult( 0 ); // reset acceleration
     
     if ( !( (Button)controls.buttons.get("walls") ).state )
-    { checkWrap(); }
+    {
+      PVector v = checkWrap();
+      myTrail.translateAll( v ); // move each point in trails by the same amount as pos. 
+    }
   }
       
   // draw    
