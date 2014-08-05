@@ -1,7 +1,7 @@
 class Creature
 {  
-  Flock myFlock;
-  Trail myTrail;
+  Flock myFlock; // creatures have a reference to their flock
+  Trail myTrail; // creatures have a reference to their trail
   PVector pos, vel, acc;
   float wanderAngle;
   color cstroke, cfill;
@@ -33,11 +33,11 @@ class Creature
   PVector checkWrap()
   {
     PVector v = new PVector( 0, 0 );
-    float buffer = 2 * r;   
-    if ( pos.x < -r )
+    float buffer = 2 * r; // buffer is the size of the creature  
+    if ( pos.x < -r ) // if creature is halfway off the screen
     {
-      pos.x += width + buffer;
-      v.x = width + buffer;
+      pos.x += width + buffer; // move creature to halfway on the screen on the opposite side
+      v.x = width + buffer; // save movement offset so that trails are also moved
     }
     else if ( pos.x > width + r )
     {
@@ -133,9 +133,9 @@ class Creature
     boolean trailVal = ( (Button)controls.buttons.get("trails") ).state; // logic for trail fade out
     if ( trailVal )
     {
-      if ( !trailsWereOn ) 
+      if ( !trailsWereOn ) // if trails were just turned on 
       {
-        myTrail.reset();
+        myTrail.reset(); // reset trail points so that trail doesn't start at last recorded creature position
         trailsWereOn = true;
       } 
       if ( frameCount % myFlock.framesPerPoint == 0 ) // update trail point list with creature pos every so often. 
