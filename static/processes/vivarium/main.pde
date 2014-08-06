@@ -31,7 +31,7 @@ void setup()
   flockList = makeFlocks( 10, 150 ); // args: min flock size, max total creatures.
   bgTexture = new Texture();
   controls = new ControlPanel(); // make dev buttons
-  perlinFlow = new FlowField( 25 );
+  perlinFlow = new FlowField( 25 ); //arg: cell size for perlin field grid
   cursor = new Cursor();
   debris = new Debris( 100 ); // arg: number of particles
   
@@ -42,8 +42,7 @@ void draw()
 {
   bgTexture.draw();
   
-  if ( ( (Button)controls.buttons.get("flow") ).state )
-  { perlinFlow.update(); }
+  perlinFlow.update();
     
   if ( javascript == null && frameCount > 30 ) // display buttons in native mode  only
   { controls.update(); controls.draw(); }

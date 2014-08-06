@@ -23,7 +23,7 @@ class Trail
     for (  int i = 0; i < points.length; i++ )
     {
       points[ i ] = new PVector( owner.pos.x, owner.pos.y );
-      frames[ i ] = -1000;
+      frames[ i ] = -1000; // older than any frame (arbitrary value for transparency)
     }
   }
   
