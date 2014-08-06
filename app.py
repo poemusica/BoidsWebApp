@@ -164,7 +164,7 @@ def gallery():
 
 	return render_template("gallery.html", images=template_values)
 
-# gallery page
+# discoverer permalinks
 @app.route("/discoverer/<id>")
 def user_page(id):
 	user = model.session.query(model.User).filter_by(id=id).first()
