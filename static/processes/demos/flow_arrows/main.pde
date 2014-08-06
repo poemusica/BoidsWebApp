@@ -11,7 +11,7 @@ void setup()
 {
   size( 800, 500 );
   smooth();
-  frameRate( 30 );
+  frameRate( 10 );
   
   theme = new Theme(); // 'import' color library
   controls = new ControlPanel(); // make native buttons

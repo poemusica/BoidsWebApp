@@ -1,13 +1,11 @@
 class FlowField
 {
   int cellSize;
-  int cols, rows, bookmark;
+  int cols, rows;
   PVector [][] field;
   color lineColor;
   float fieldBias;
   float zoff = 0;
-  PGraphics workingBuffer;
-  PGraphics visibleBuffer;
   
   FlowField( int csize )
   {
@@ -16,16 +14,7 @@ class FlowField
     fieldBias = random( 1, 360 );
     cols = width / cellSize;
     rows = height / cellSize;
-    bookmark = 0;
     field = new PVector [ cols ] [ rows ];
-    workingBuffer = createGraphics(width, height);
-    visibleBuffer = createGraphics(width, height);
-    visibleBuffer.beginDraw();
-    visibleBuffer.background( 0, 0, 0, 0 );
-    visibleBuffer.endDraw();
-    workingBuffer.beginDraw();
-    workingBuffer.background( 0, 0, 0, 0 );
-    workingBuffer.endDraw();
     reCompute();
   }
   
@@ -39,7 +28,9 @@ class FlowField
       { 
         float angle = map( noise( xoff, yoff, zoff ), 0, 1, 0, TWO_PI );
         angle += radians( fieldBias );
-        field [ c ][ r ] = new PVector( cos( angle ), sin( angle ) );
+        PVector v = new PVector( 1, 0 ); // unit vector with angle 0
+        v.rotate( angle );
+        field[ c ][ r ] = v; 
         yoff += 0.1;
       }
       xoff += 0.1;
@@ -63,54 +54,33 @@ class FlowField
   
   void update()
   {
-    if ( frameCount % 10 == 0 && controls.buttons[(int)controls.buttonsIndex.get("flow")].state)
+    if ( controls.buttons[(int)controls.buttonsIndex.get("flow")].state )
     { reCompute(); }
-    else if ( frameCount % 10 == 0 )
+    else
    { randomReCompute(); } 
   }
   
   void draw()
   {
-    if ( frameCount % 10 == 0 ) { image( visibleBuffer, 0, 0 ); }
-    int stoppingPoint = bookmark + cols / 8;
-    if ( stoppingPoint > cols ) { stoppingPoint = cols; }
-    
-    workingBuffer.beginDraw();
-    workingBuffer.stroke( lineColor );
-    workingBuffer.strokeWeight( 1 );
-    PVector loc = new PVector( bookmark * cellSize + cellSize / 2, cellSize / 2 );
-    for ( int c = bookmark; c < stoppingPoint; c++ )
+    stroke( lineColor );
+    strokeWeight( 1 );
+    PVector loc = new PVector( cellSize / 2, cellSize / 2 ); // middle of cell
+    for ( int c = 0; c < cols; c++ )
     {
       loc.y = cellSize / 2;
       for ( int r=0; r < rows; r++ )
       {        
-        workingBuffer.pushMatrix();
-        workingBuffer.translate(loc.x, loc.y);
-        workingBuffer.rotate(field[c][r].heading());
-       
-        workingBuffer.line( -8, 0, 8, 0 );
-        workingBuffer.line( 3, -3, 8, 0 );
-        workingBuffer.line( 3, 3, 8, 0 );
-       
-        workingBuffer.popMatrix();
+        pushMatrix();
+        translate( loc.x, loc.y );
+        rotate( field[c][r].heading() );
+        line( -8, 0, 8, 0 );
+        line( 3, -3, 8, 0 );
+        line( 3, 3, 8, 0 );
+        popMatrix();
         loc.y += cellSize;
       }
       loc.x += cellSize;
     }
-    workingBuffer.endDraw();
-    bookmark = stoppingPoint;
-    
-    if (stoppingPoint == cols)
-    {
-      PGraphics temp = visibleBuffer;
-      visibleBuffer = workingBuffer;
-      workingBuffer = temp;
-      workingBuffer.beginDraw();
-      workingBuffer.background( 0, 0, 0, 0 );
-      workingBuffer.endDraw();
-      bookmark = 0;
-    }
-    image(visibleBuffer, 0, 0);
   }
   
 }
